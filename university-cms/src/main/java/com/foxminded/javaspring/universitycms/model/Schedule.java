@@ -45,7 +45,7 @@ public class Schedule {
 	private Teacher teacher;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "schedules_classes", schema = "university", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
+	@JoinTable(name = "schedules_lessons", schema = "university", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
 	private Set<Lesson> lessons;
 
 	@Autowired

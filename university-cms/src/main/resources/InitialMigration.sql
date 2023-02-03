@@ -3,34 +3,62 @@ CREATE SCHEMA IF NOT EXISTS university;
 CREATE TABLE IF NOT EXISTS university.users
 (
 	user_id SERIAL PRIMARY KEY,
-    course_name VARCHAR(20) NOT NULL,
-    course_description VARCHAR(200)
+    login VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    role VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS school.groups
+CREATE TABLE IF NOT EXISTS university.courses
 (
-    group_id SERIAL PRIMARY KEY,
-    group_name VARCHAR(5) NOT NULL
+	course_id SERIAL PRIMARY KEY,
+	course_name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS school.students
+CREATE TABLE IF NOT EXISTS university.groups
 (
-    student_id SERIAL PRIMARY KEY,
-    group_id INT,
-    first_name VARCHAR(20) NOT NULL,
-    last_name VARCHAR(20) NOT NULL,
-	FOREIGN KEY (group_id)
-		REFERENCES school.groups(group_id)
-			ON DELETE SET NULL
+	group_id SERIAL PRIMARY KEY,
+	group_name VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS school.students_courses
+CREATE TABLE IF NOT EXISTS university.schedules
 (
-	student_id INT NOT NULL,
+	schedule_id SERIAL PRIMARY KEY,
+	start_date DATE,
+	end_date DATE
+);
+
+CREATE TABLE IF NOT EXISTS university.lessons
+(
+	lesson_id SERIAL PRIMARY KEY,
+	lesson_date DATE,
+	start_time TIME
+);
+
+CREATE TABLE IF NOT EXISTS university.teachers_courses
+(
+	user_id INT NOT NULL,
 	course_id INT NOT NULL,
-	FOREIGN KEY (student_id)
-		REFERENCES school.students(student_id),
-	FOREIGN KEY (course_id)
-		REFERENCES school.courses(course_id),
-	UNIQUE (student_id, course_id)
+	FOREIGN KEY (user_id) REFERENCES university.users(user_id),
+	FOREIGN KEY (course_id) REFERENCES university.courses(course_id),
+	UNIQUE (user_id, course_id)
+);
+
+CREATE TABLE IF NOT EXISTS university.groups_courses
+(
+	group_id INT NOT NULL,
+	course_id INT NOT NULL,
+	FOREIGN KEY (group_id) REFERENCES university.groups(group_id),
+	FOREIGN KEY (course_id) REFERENCES university.courses(course_id),
+	UNIQUE (group_id, course_id)
+);
+
+CREATE TABLE IF NOT EXISTS university.schedules_lessons
+(
+	schedule_id INT NOT NULL,
+	lesson_id INT NOT NULL,
+	FOREIGN KEY (schedule_id) REFERENCES university.schedules(schedule_id),
+	FOREIGN KEY (lesson_id) REFERENCES university.lessons(lesson_id),
+	UNIQUE (schedule_id, lesson_id)
 );

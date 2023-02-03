@@ -2,7 +2,6 @@ package com.foxminded.javaspring.universitycms.model;
 
 import java.util.Set;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,6 +22,7 @@ public class Teacher extends User {
 	private Set<Course> courses;
 	
 	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "schedule_id")
 	private Schedule schedule;
 	
 	public void addCourse (Course course) {

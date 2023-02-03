@@ -31,8 +31,8 @@ public class Lesson {
 	@Column(name = "lesson_id")
 	private Long lessonID;
 	
-	@Column(name = "date")
-	private LocalDate date;
+	@Column(name = "lesson_date")
+	private LocalDate lessonDate;
 	
 	@Column(name = "start_time")
 	private LocalTime startTime;
