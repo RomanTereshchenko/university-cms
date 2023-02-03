@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -33,10 +32,6 @@ public class Group {
 
 	@Column(name = "group_name")
 	private String groupName;
-
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "group_id")
-	private Set<Student> students;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "groups_courses", schema = "university", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
