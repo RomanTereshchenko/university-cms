@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Teacher extends User {
+public class Teacher extends Person {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "teachers_courses", schema = "university", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@JoinTable(name = "teachers_courses", schema = "university", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
 	
 	@OneToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class Teacher extends User {
 			return true;
 		if (!(o instanceof Teacher))
 			return false;
-		return userID != null && userID.equals(((Teacher) o).getUserID());
+		return personID != null && personID.equals(((Teacher) o).getPersonID());
 	}
 
 	@Override

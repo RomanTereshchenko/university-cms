@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
-@Table (name = "users", schema = "university")
-public class User {
+@Table (name = "persons", schema = "university")
+public class Person {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column (name = "user_id")
-	protected Long userID;
+	@Column (name = "person_id")
+	protected Long personID;
 	
 	@Column (name = "login")
 	protected String login;

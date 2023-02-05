@@ -32,11 +32,8 @@ public class Schedule {
 	@Column(name = "schedule_id")
 	private Long scheduleID;
 
-	@Column(name = "start_date")
-	private LocalDate startDate;
-
-	@Column(name = "end_date")
-	private LocalDate endDate;
+	@Column(name = "date")
+	private LocalDate date;
 
 	@OneToOne(mappedBy = "schedule")
 	private Group group;

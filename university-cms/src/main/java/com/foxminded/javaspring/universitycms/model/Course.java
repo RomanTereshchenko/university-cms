@@ -27,6 +27,9 @@ public class Course {
 
 	@Column(name = "course_name")
 	private String courseName;
+	
+	@Column(name = "course_description")
+	private String courseDescription;
 
 	@ManyToMany(mappedBy = "courses")
 	private Set<Group> groups;

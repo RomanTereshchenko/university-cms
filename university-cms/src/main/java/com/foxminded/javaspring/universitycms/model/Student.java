@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Entity
-public class Student extends User {
+public class Student extends Person {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
@@ -27,7 +27,7 @@ public class Student extends User {
 			return true;
 		if (!(o instanceof Student))
 			return false;
-		return userID != null && userID.equals(((Student) o).getUserID());
+		return personID != null && personID.equals(((Student) o).getPersonID());
 	}
 
 	@Override

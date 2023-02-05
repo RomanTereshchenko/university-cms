@@ -42,7 +42,7 @@ public class Lesson {
 	private Course course;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "person_id")
 	private Teacher teacher;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
