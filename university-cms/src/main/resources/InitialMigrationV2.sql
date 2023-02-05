@@ -63,3 +63,12 @@ CREATE TABLE IF NOT EXISTS university.schedules
 	lesson_id INT,
 	FOREIGN KEY (lesson_id) REFERENCES university.lessons(lesson_id)
 );
+
+CREATE TABLE IF NOT EXISTS university.students_courses
+(
+	student_id INT NOT NULL,
+	course_id INT NOT NULL,
+	FOREIGN KEY (student_id) REFERENCES university.students(student_id),
+	FOREIGN KEY (course_id) REFERENCES university.courses(course_id),
+	UNIQUE student_id, course_id
+);
