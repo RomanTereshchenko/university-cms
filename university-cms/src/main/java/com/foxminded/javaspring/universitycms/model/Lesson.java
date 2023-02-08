@@ -2,7 +2,8 @@ package com.foxminded.javaspring.universitycms.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -42,14 +42,18 @@ public class Lesson {
 	private Course course;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "person_id")
+	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
 	private Group group;
-	
-	@ManyToMany(mappedBy = "lessons")
-	private Set<Schedule> schedules;
+
+	@Autowired
+	public Lesson(Course course, Teacher teacher, Group group) {
+		this.course = course;
+		this.teacher = teacher;
+		this.group = group;
+	}
 	
 }

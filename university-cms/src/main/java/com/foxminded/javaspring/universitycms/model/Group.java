@@ -2,17 +2,17 @@ package com.foxminded.javaspring.universitycms.model;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,8 +37,10 @@ public class Group {
 	@JoinTable(name = "groups_courses", schema = "university", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	private Schedule schedule;
+	@Autowired
+	public Group(Set<Course> courses) {
+		this.courses = courses;
+	}
 	
 	public void addCourse(Course course) {
 		courses.add(course);
@@ -49,4 +51,5 @@ public class Group {
 		courses.add(course);
 		course.getGroups().remove(this);
 	}
+
 }

@@ -12,20 +12,16 @@ CREATE TABLE IF NOT EXISTS university.persons
 
 CREATE TABLE IF NOT EXISTS university.students
 (
-	student_id INT NOT NULL,
+	student_id INT PRIMARY KEY,
 	group_id INT,
-	course_id INT,
 	FOREIGN KEY (student_id) REFERENCES university.persons(person_id),
-	FOREIGN KEY (group_id) REFERENCES university.groups(group_id),
-	FOREIGN KEY (course_id) REFERENCES university.courses(course_id)
+	FOREIGN KEY (group_id) REFERENCES university.groups(group_id)
 );
 
 CREATE TABLE IF NOT EXISTS university.teachers
 (
-	teacher_id INT NOT NULL,
-	course_id INT,
-	FOREIGN KEY (teacher_id) REFERENCES university.persons(person_id),
-	FOREIGN KEY (course_id) REFERENCES university.courses(course_id)
+	teacher_id INT PRIMARY KEY,
+	FOREIGN KEY (teacher_id) REFERENCES university.persons(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS university.courses
@@ -38,9 +34,7 @@ CREATE TABLE IF NOT EXISTS university.courses
 CREATE TABLE IF NOT EXISTS university.groups
 (
 	group_id SERIAL PRIMARY KEY,
-	group_name VARCHAR(20) NOT NULL,
-	student_id INT,
-	FOREIGN KEY (student_id) REFERENCES university.students(student_id)
+	group_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS university.lessons
@@ -56,19 +50,20 @@ CREATE TABLE IF NOT EXISTS university.lessons
 	FOREIGN KEY (group_id) REFERENCES university.groups(group_id)
 );
 
-CREATE TABLE IF NOT EXISTS university.schedules
+CREATE TABLE IF NOT EXISTS university.groups_courses
 (
-	schedule_id SERIAL PRIMARY KEY,
-	schedule_date DATE,
-	lesson_id INT,
-	FOREIGN KEY (lesson_id) REFERENCES university.lessons(lesson_id)
+	group_id INT NOT NULL,
+	course_id INT NOT NULL,
+	FOREIGN KEY (group_id) REFERENCES university.groups(group_id),
+	FOREIGN KEY (course_id) REFERENCES university.courses(course_id),
+	UNIQUE group_id, course_id
 );
 
-CREATE TABLE IF NOT EXISTS university.students_courses
+CREATE TABLE IF NOT EXISTS university.teachers_courses
 (
-	student_id INT NOT NULL,
+	teacher_id INT NOT NULL,
 	course_id INT NOT NULL,
-	FOREIGN KEY (student_id) REFERENCES university.students(student_id),
+	FOREIGN KEY (teacher_id) REFERENCES university.teachers(teacher_id),
 	FOREIGN KEY (course_id) REFERENCES university.courses(course_id),
-	UNIQUE student_id, course_id
+	UNIQUE teacher_id, course_id
 );
