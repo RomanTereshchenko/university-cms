@@ -1,10 +1,11 @@
 package com.foxminded.javaspring.universitycms.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,21 +22,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "teachers", schema = "university")
 public class Teacher {
 	
 	@Id
-	@GeneratedValue
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long teacherID;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "person_id")
+	@JoinColumn(name = "teacher_id")
 	private Person person;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "teachers_courses", schema = "university", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@ManyToMany
+	@JoinTable(name = "teachers_courses", schema = "university", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
 	
-	@Autowired
 	public Teacher(Person person, Set<Course> courses) {
 		this.person = person;
 		this.courses = courses;

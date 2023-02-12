@@ -1,6 +1,8 @@
 package com.foxminded.javaspring.universitycms.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,10 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "students", schema = "university")
 public class Student {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long studentID;
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -31,7 +35,6 @@ public class Student {
 	@JoinColumn(name = "group_id")
 	private Group group;
 
-	@Autowired
 	public Student(Person person, Group group) {
 		this.person = person;
 		this.group = group;

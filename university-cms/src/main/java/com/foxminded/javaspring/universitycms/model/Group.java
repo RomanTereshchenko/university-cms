@@ -2,9 +2,7 @@ package com.foxminded.javaspring.universitycms.model;
 
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,17 +25,16 @@ public class Group {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "group_id")
+	@Column(name = "id")
 	private Integer groupID;
 
 	@Column(name = "group_name")
 	private String groupName;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name = "groups_courses", schema = "university", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
 	
-	@Autowired
 	public Group(Set<Course> courses) {
 		this.courses = courses;
 	}

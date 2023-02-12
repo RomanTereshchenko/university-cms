@@ -19,7 +19,7 @@ public class Person {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column (name = "person_id")
+	@Column (name = "id")
 	protected Long personID;
 	
 	@Column (name = "login")

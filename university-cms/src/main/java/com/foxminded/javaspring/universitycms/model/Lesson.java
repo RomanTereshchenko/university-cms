@@ -3,7 +3,6 @@ package com.foxminded.javaspring.universitycms.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +27,7 @@ public class Lesson {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "lesson_id")
+	@Column(name = "id")
 	private Long lessonID;
 	
 	@Column(name = "lesson_date")
@@ -49,7 +48,6 @@ public class Lesson {
 	@JoinColumn(name = "group_id")
 	private Group group;
 
-	@Autowired
 	public Lesson(Course course, Teacher teacher, Group group) {
 		this.course = course;
 		this.teacher = teacher;
