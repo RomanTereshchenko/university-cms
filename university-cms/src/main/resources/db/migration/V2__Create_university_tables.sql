@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS university.groups
 
 CREATE TABLE IF NOT EXISTS university.persons
 (
-	  id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
     login VARCHAR(20) NOT NULL,
     password VARCHAR(20) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS university.persons
 CREATE TABLE IF NOT EXISTS university.students
 (
 	id SERIAL PRIMARY KEY,
-	group_id INT,
 	person_id INT,
+	group_id INT,
 	FOREIGN KEY (person_id) REFERENCES university.persons(id),
 	FOREIGN KEY (group_id) REFERENCES university.groups(id)
 );
@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS university.students
 CREATE TABLE IF NOT EXISTS university.teachers
 (
   id SERIAL PRIMARY KEY,
-	teacher_id INT,
-	FOREIGN KEY (teacher_id) REFERENCES university.persons(id)
+	person_id INT,
+	FOREIGN KEY (person_id) REFERENCES university.persons(id)
 );
 
 CREATE TABLE IF NOT EXISTS university.courses
