@@ -26,7 +26,7 @@ public class Group {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer groupID;
+	private Long groupID;
 
 	@Column(name = "group_name")
 	private String groupName;

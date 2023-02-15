@@ -2,7 +2,6 @@ package com.foxminded.javaspring.universitycms.service;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -19,54 +18,47 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Transactional
 public class CourseService {
-	
+
 	private CourseDao courseDao;
 
 	@Autowired
 	public CourseService(CourseDao courseDao) {
 		this.courseDao = courseDao;
 	}
-	
-	public Course saveNewCourse (Course course) throws SQLException {
+
+	public Course saveNewCourse(Course course) throws SQLException {
 		var savedNewCourse = courseDao.save(course);
 		log.info("New course " + savedNewCourse.getCourseName() + " saved");
 		return savedNewCourse;
 	}
-	
-	public Optional<Course> findCourseById (Long Id) throws SQLException {
-		var course = courseDao.findById(Id);
+
+	public Course findCourseById(Long courseId) throws SQLException {
+		var course = courseDao.findById(courseId);
 		if (course.isPresent()) {
-			log.info("Course with Id " + Id + " is found");
-			return course;
+			log.info("Course with Id " + courseId + " is found");
+			return course.get();
 		}
-		log.info("Course with Id " + Id + " is not found");
-		return Optional.empty();
+		log.info("Course with Id " + courseId + " is not found");
+		return null;
 	}
-	
-	public List<Course> findAllCourses() throws SQLException {
-		var courses = courseDao.findAll();
-		if (courses.isEmpty()) {
-			log.info("No courses found in the database");
-		}
-		return courses;
+	public List<Course> findAllCourses() {
+		return courseDao.findAll();
 	}
-	
-	public Course updateCourse (Course course) {
+
+	public Course updateCourse(Course course) {
 		var updatingCourse = courseDao.findById(course.getCourseID());
 		if (updatingCourse.isPresent()) {
 			courseDao.save(course);
 			log.info("Course " + course.getCourseName() + " updated");
 			return course;
 		}
-		throw new NullPointerException("This course is not found in the database");
+		log.info("This course does not exist in the database");
+		return null;
 	}
-	
-	public void deleteCourseById (Long Id) throws SQLException {
-		var deletingCourse = courseDao.findById(Id);
-		if (deletingCourse.isPresent()) {
-		courseDao.deleteById(Id);
-		}
-		throw new NullPointerException("This course is not found in the database");
+
+	public void deleteCourseById(Long courseId) throws SQLException {
+		courseDao.deleteById(courseId);
+		log.info("Course with ID " + courseId + " is deleted");
 	}
-	
+
 }
