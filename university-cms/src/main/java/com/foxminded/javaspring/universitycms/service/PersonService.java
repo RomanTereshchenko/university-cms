@@ -57,7 +57,7 @@ public class PersonService {
 	}
 	
 	public void deletePersonById(Long personId) {
-		personDao.deleteById(personId);
 		log.info("Person with Id " + personId + " deleted");
+		personDao.deleteById(personId);
 	}
 }

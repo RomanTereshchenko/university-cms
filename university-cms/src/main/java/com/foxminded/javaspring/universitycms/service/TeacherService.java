@@ -57,7 +57,7 @@ public class TeacherService {
 	}
 	
 	public void deleteTeacherById(Long teacherId) {
-		teacherDao.deleteById(teacherId);
 		log.info("Teacher with Id " + teacherId + " deleted");
+		teacherDao.deleteById(teacherId);
 	}
 }

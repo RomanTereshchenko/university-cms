@@ -45,7 +45,7 @@ public class CourseService {
 		return courseDao.findAll();
 	}
 
-	public Course updateCourse(Course course) {
+	public Course updateCourse(Course course) throws SQLException {
 		var updatingCourse = courseDao.findById(course.getCourseID());
 		if (updatingCourse.isPresent()) {
 			courseDao.save(course);
@@ -57,8 +57,8 @@ public class CourseService {
 	}
 
 	public void deleteCourseById(Long courseId) throws SQLException {
-		courseDao.deleteById(courseId);
 		log.info("Course with ID " + courseId + " is deleted");
+		courseDao.deleteById(courseId);
 	}
 
 }

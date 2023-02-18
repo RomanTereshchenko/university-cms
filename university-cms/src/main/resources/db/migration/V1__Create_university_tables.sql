@@ -9,11 +9,11 @@ CREATE TABLE IF NOT EXISTS university.groups
 CREATE TABLE IF NOT EXISTS university.persons
 (
 	id SERIAL PRIMARY KEY,
-    login VARCHAR(20) NOT NULL,
-    password VARCHAR(20) NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    role VARCHAR(20) NOT NULL
+   	login VARCHAR(20) NOT NULL,
+	password VARCHAR(20) NOT NULL,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	role VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS university.students
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS university.students
 
 CREATE TABLE IF NOT EXISTS university.teachers
 (
-  id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	person_id INT,
 	FOREIGN KEY (person_id) REFERENCES university.persons(id)
 );

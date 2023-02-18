@@ -58,7 +58,7 @@ public class GroupService {
 	}
 	
 	public void deleteGroupById (Long groupId) {
-		groupDao.deleteById(groupId);
 		log.info("Group with Id " + groupId + "is deleted");
+		groupDao.deleteById(groupId);
 	}
 }

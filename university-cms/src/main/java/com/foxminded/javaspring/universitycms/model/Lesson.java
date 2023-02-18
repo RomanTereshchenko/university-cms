@@ -33,8 +33,8 @@ public class Lesson {
 	@Column(name = "lesson_date")
 	private LocalDate lessonDate;
 	
-	@Column(name = "start_time")
-	private LocalTime startTime;
+	@Column(name = "lesson_time")
+	private LocalTime lessonTime;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")

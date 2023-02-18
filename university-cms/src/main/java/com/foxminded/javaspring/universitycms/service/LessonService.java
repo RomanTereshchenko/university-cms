@@ -28,7 +28,7 @@ public class LessonService {
 
 	public Lesson saveNewLesson(Lesson lesson) {
 		var savingLesson = lessonDao.save(lesson);
-		log.info("New lesson " + lesson.getCourse() + lesson.getLessonDate() + lesson.getStartTime() + " saved");
+		log.info("New lesson " + lesson.getCourse() + lesson.getLessonDate() + lesson.getLessonTime() + " saved");
 		return savingLesson;
 	}
 	
@@ -58,8 +58,8 @@ public class LessonService {
 	}
 	
 	public void deleteLessonById(Long lessonId) {
-		lessonDao.deleteById(lessonId);	
 		log.info("Lesson with Id" + lessonId + " deleted");
+		lessonDao.deleteById(lessonId);	
 	}
 	
 }

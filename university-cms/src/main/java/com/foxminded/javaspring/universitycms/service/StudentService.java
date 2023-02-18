@@ -57,8 +57,8 @@ public class StudentService {
 	}
 	
 	public void deleteStudentById(Long studentId) {
-		studentDao.deleteById(studentId);
 		log.info("Student with Id " + studentId + " deleted");
+		studentDao.deleteById(studentId);
 	}
 
 }
