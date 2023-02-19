@@ -2,28 +2,46 @@ package com.foxminded.javaspring.universitycms.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Teacher extends User {
+@Table(name = "teachers", schema = "university")
+public class Teacher {
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "teachers_courses", schema = "university", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private Set<Course> courses;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long teacherID;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	private Schedule schedule;
+	@JoinColumn(name = "person_id")
+	private Person person;
+	
+	@ManyToMany
+	@JoinTable(name = "teachers_courses", schema = "university", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private Set<Course> courses;
+	
+	public Teacher(Person person, Set<Course> courses) {
+		this.person = person;
+		this.courses = courses;
+	}
 	
 	public void addCourse (Course course) {
 		courses.add(course);
@@ -33,20 +51,6 @@ public class Teacher extends User {
 	public void removeCourse (Course course) {
 		courses.remove(course);
 		course.getTeachers().remove(this);
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Teacher))
-			return false;
-		return userID != null && userID.equals(((Teacher) o).getUserID());
-	}
-
-	@Override
-	public int hashCode() {
-		return getClass().hashCode();
 	}
 
 }
