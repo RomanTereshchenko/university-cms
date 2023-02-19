@@ -14,6 +14,8 @@ import com.foxminded.javaspring.universitycms.model.Person;
 @RequestMapping("/api/persons")
 public class PersonController {
 	
+	// Create basic UI
+	
 	@Autowired
     private PersonDao personDao;
 
