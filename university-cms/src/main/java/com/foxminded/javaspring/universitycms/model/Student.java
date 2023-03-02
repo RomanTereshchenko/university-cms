@@ -40,4 +40,10 @@ public class Student {
 		this.group = group;
 	}
 
+	public Student(String firstName, String lastName) {
+		this.person.firstName = firstName;
+		this.person.lastName = lastName;
+
+	}
+
 }

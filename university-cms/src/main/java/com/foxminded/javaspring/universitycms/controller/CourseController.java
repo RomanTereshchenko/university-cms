@@ -4,56 +4,34 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.foxminded.javaspring.universitycms.dao.CourseDao;
 import com.foxminded.javaspring.universitycms.model.Course;
+import com.foxminded.javaspring.universitycms.service.CourseService;
 
 @Controller
 @RequestMapping("/api/courses")
 public class CourseController {
 	
-	@Autowired
-    private CourseDao courseDao;
+    private CourseService courseService;
+    
+    @Autowired
+    public CourseController(CourseService courseService) {
+		this.courseService = courseService;
+	}
 
-    @GetMapping
+	@GetMapping
     public @ResponseBody List<Course> findAll() {
-        return courseDao.findAll();
+        return courseService.findAllCourses();
     }
-//
-//    @GetMapping("/title/{bookTitle}")
-//    public List findByTitle(@PathVariable String bookTitle) {
-//        return bookRepository.findByTitle(bookTitle);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Book findOne(@PathVariable Long id) {
-//        return bookRepository.findById(id)
-//          .orElseThrow(BookNotFoundException::new);
-//    }
-//
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Book create(@RequestBody Book book) {
-//        return bookRepository.save(book);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public void delete(@PathVariable Long id) {
-//        bookRepository.findById(id)
-//          .orElseThrow(BookNotFoundException::new);
-//        bookRepository.deleteById(id);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public Book updateBook(@RequestBody Book book, @PathVariable Long id) {
-//        if (book.getId() != id) {
-//          throw new BookIdMismatchException();
-//        }
-//        bookRepository.findById(id)
-//          .orElseThrow(BookNotFoundException::new);
-//        return bookRepository.save(book);
-
+	
+    @GetMapping("/all")
+    public String showAll(Model model) {
+    	List<Course> courses = courseService.findAllCourses();
+        model.addAttribute("courses", courses);
+        return "courses";
+    }
 }

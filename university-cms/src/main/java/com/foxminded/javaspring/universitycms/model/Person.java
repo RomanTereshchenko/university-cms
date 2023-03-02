@@ -3,9 +3,11 @@ package com.foxminded.javaspring.universitycms.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyEnumerated;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +39,7 @@ public class Person {
 	protected String lastName;
 	
 	@Column (name = "role")
+	@MapKeyEnumerated(value = EnumType.STRING)
 	protected Role role;
 
 }
