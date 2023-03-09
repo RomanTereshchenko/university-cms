@@ -67,11 +67,11 @@ public class PersonGenerator {
 	}
 	
 	private String getRandomFirstName() {
-		return studentFirstNames.get(random.nextInt(studentFirstNames.size()));
+		return studentFirstNames.get(random.nextInt(studentFirstNames.size()-1));
 	}
 
 	private String getRandomLastName() {
-		return studentLastNames.get(random.nextInt(studentLastNames.size()));
+		return studentLastNames.get(random.nextInt(studentLastNames.size()-1));
 	}
 
 }

@@ -25,13 +25,13 @@ public class GroupGenerator {
 
 	private Random random;
 	private GroupDao groupDao;
-	private CourseDao courseDao;
+	private CourseGenerator courseGenerator;
 
 	@Autowired
-	public GroupGenerator(Random random, GroupDao groupDao, CourseDao courseDao) {
+	public GroupGenerator(Random random, GroupDao groupDao, CourseGenerator courseGenerator) {
 		this.random = random;
 		this.groupDao = groupDao;
-		this.courseDao = courseDao;
+		this.courseGenerator = courseGenerator;
 	}
 
 	@Transactional
@@ -40,7 +40,7 @@ public class GroupGenerator {
 		for (int i = 0; i < countToGenerate; i++) {
 			Group group = new Group();
 			group.setGroupName(generateGroupName());
-//			group.setCourses(getNRandomCourses(3));
+//			group.setCourses(courseGenerator.getNRandomCourses(3));
 			groupDao.save(group);
 			groupsLocal.add(group);
 		}
@@ -48,12 +48,6 @@ public class GroupGenerator {
 		return groupsLocal;
 	}
 
-	private Set<Course> getNRandomCourses(int numberOfCoursesInGroup) {
-		List<Course> courses = courseDao.findAll();
-
-		return IntStream.rangeClosed(1, numberOfCoursesInGroup)
-				.mapToObj(courseInGroupID -> courses.get(random.nextInt(courses.size()))).collect(Collectors.toSet());
-	}
 
 	private String generateGroupName() {
 		return (new StringBuilder().append(generateRandomChar()).append(generateRandomChar()) + "-"

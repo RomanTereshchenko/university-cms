@@ -1,5 +1,6 @@
 package com.foxminded.javaspring.universitycms.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -38,5 +39,26 @@ public class Course {
 
 	@ManyToMany(mappedBy = "courses")
 	private Set<Teacher> teachers;
+	
+//	public Course(String courseName) {
+//		this.courseName = courseName;
+//	}
+//	
+//	public Course(Long courseID, String courseName) {
+//		this.courseID = courseID;
+//		this.courseName = courseName;
+//	}
 
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(courseName, course.courseName);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseName);
+    }
 }
