@@ -48,5 +48,13 @@ public class Group {
 		courses.add(course);
 		course.getGroups().remove(this);
 	}
+	
+	public String getCoursesNames() {
+		StringBuilder groupCoursesNames = new StringBuilder();
+		for (Course course : courses) {
+				groupCoursesNames.append(course.getCourseName()).append(", ");
+		}
+		return groupCoursesNames.toString();
+	}
 
 }

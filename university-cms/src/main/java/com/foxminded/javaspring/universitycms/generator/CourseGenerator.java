@@ -2,11 +2,10 @@ package com.foxminded.javaspring.universitycms.generator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
 
@@ -47,10 +46,13 @@ public class CourseGenerator {
 		return coursesLocal;
 	}
 
-	public Set<Course> getNRandomCourses(int numberOfCoursesInGroup) {
+	public Set<Course> getNRandomCourses(int numberOfCourses) {
 		List<Course> courses = courseDao.findAll();
-		return IntStream.rangeClosed(1, numberOfCoursesInGroup)
-				.mapToObj(courseInGroupID -> courses.get(random.nextInt(courses.size()-1))).collect(Collectors.toSet());
+		Set<Course> nRandomCourses = new HashSet<>();
+		while (nRandomCourses.size() < numberOfCourses) {
+			nRandomCourses.add(courses.get(random.nextInt(courses.size())));		
+		}
+		return nRandomCourses;
 	}
 
 }

@@ -3,17 +3,12 @@ package com.foxminded.javaspring.universitycms.generator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.foxminded.javaspring.universitycms.dao.CourseDao;
 import com.foxminded.javaspring.universitycms.dao.GroupDao;
-import com.foxminded.javaspring.universitycms.model.Course;
 import com.foxminded.javaspring.universitycms.model.Group;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +35,7 @@ public class GroupGenerator {
 		for (int i = 0; i < countToGenerate; i++) {
 			Group group = new Group();
 			group.setGroupName(generateGroupName());
-//			group.setCourses(courseGenerator.getNRandomCourses(3));
+			group.setCourses(courseGenerator.getNRandomCourses(3));
 			groupDao.save(group);
 			groupsLocal.add(group);
 		}

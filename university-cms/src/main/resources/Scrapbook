@@ -1,2 +1,0 @@
-select * from university.groups;
-delete from university.students;

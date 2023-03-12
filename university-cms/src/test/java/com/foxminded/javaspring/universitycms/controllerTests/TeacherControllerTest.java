@@ -18,7 +18,7 @@ import com.foxminded.javaspring.universitycms.service.CourseService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CourseController.class)
-class CourseControllerTest {
+class TeacherControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;

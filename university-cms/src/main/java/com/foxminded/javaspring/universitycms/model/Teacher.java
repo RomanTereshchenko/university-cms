@@ -52,5 +52,13 @@ public class Teacher {
 		courses.remove(course);
 		course.getTeachers().remove(this);
 	}
+	
+	public String getCoursesNames() {
+		StringBuilder teacherCoursesNames = new StringBuilder();
+		for (Course course : courses) {
+			teacherCoursesNames.append(course.getCourseName()).append(", ");
+		}
+		return teacherCoursesNames.toString();
+	}
 
 }

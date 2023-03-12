@@ -1,14 +1,12 @@
 package com.foxminded.javaspring.universitycms.generator;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.foxminded.javaspring.universitycms.dao.CourseDao;
 import com.foxminded.javaspring.universitycms.dao.PersonDao;
 import com.foxminded.javaspring.universitycms.dao.TeacherDao;
 import com.foxminded.javaspring.universitycms.model.Person;
@@ -22,19 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TeacherGenerator {
 
-	private Random random;
 	private PersonDao personDao;
 	private TeacherDao teacherDao;
-	private CourseDao courseDao;
 	private CourseGenerator courseGenerator;
 
 	@Autowired
-	public TeacherGenerator(Random random, PersonDao personDao, TeacherDao teacherDao, CourseDao courseDao,
-			CourseGenerator courseGenerator) {
-		this.random = random;
+	public TeacherGenerator(PersonDao personDao, TeacherDao teacherDao, CourseGenerator courseGenerator) {
 		this.personDao = personDao;
 		this.teacherDao = teacherDao;
-		this.courseDao = courseDao;
 		this.courseGenerator = courseGenerator;
 	}
 
@@ -44,11 +37,10 @@ public class TeacherGenerator {
 			if (person.getRole() == Role.TEACHER) {
 				Teacher teacher = new Teacher();
 				teacher.setPerson(person);
-//				teacher.setCourses(courseGenerator.getNRandomCourses(3));
+				teacher.setCourses(courseGenerator.getNRandomCourses(3));
 				teacherDao.save(teacher);
 			}
 		}
 		log.info("Teachers generated");
 	}
-
 }

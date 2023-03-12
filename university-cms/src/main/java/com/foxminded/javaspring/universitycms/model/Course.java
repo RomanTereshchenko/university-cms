@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,7 +29,7 @@ public class Course {
 
 	@Column(name = "course_name")
 	private String courseName;
-	
+
 	@Column(name = "course_description")
 	private String courseDescription;
 
@@ -39,26 +38,36 @@ public class Course {
 
 	@ManyToMany(mappedBy = "courses")
 	private Set<Teacher> teachers;
-	
-//	public Course(String courseName) {
-//		this.courseName = courseName;
-//	}
-//	
-//	public Course(Long courseID, String courseName) {
-//		this.courseID = courseID;
-//		this.courseName = courseName;
-//	}
 
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return Objects.equals(courseName, course.courseName);
-    }
- 
-    @Override
-    public int hashCode() {
-        return Objects.hash(courseName);
-    }
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Course course = (Course) o;
+		return Objects.equals(courseName, course.courseName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(courseName);
+	}
+
+	public String getGroupsNames() {
+		StringBuilder courseGroupsNames = new StringBuilder();
+		for (Group group : groups) {
+			courseGroupsNames.append(group.getGroupName()).append(", ");
+		}
+		return courseGroupsNames.toString();
+	}
+
+	public String getTeachersNames() {
+		StringBuilder courseTeachersNames = new StringBuilder();
+		for (Teacher teacher : teachers) {
+			courseTeachersNames.append(teacher.getPerson().getFirstName()).append(" ")
+					.append(teacher.getPerson().getLastName()).append(", ");
+		}
+		return courseTeachersNames.toString();
+	}
 }
