@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persons</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<h1>University persons</h1>
+	<a href="http://localhost:8081/api/index/all" class="btn btn-secondary my-2">Home page</a>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Login</th>
+				<th>Password</th>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>Role</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${persons.empty}">
+				<td colspan="2">No Persons Available</td>
+			</tr>
+			<tr th:each="person : ${persons}">
+				<td><span th:text="${person.personID}"> ID </span></td>
+				<td><span th:text="${person.login}"> Login </span></td>
+				<td><span th:text="${person.password}"> Password </span></td>
+				<td><span th:text="${person.firstName}"> FirstName </span></td>
+				<td><span th:text="${person.lastName}"> LastName </span></td>
+				<td><span th:text="${person.role}"> Role </span></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

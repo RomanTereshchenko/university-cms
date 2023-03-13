@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lessons</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<h1>University lessons</h1>
+	<a href="http://localhost:8081/api/index/all" class="btn btn-secondary my-2">Home page</a>
+	<table>
+		<thead>
+			<tr>
+				<th>Lesson ID</th>
+				<th>Lesson date</th>
+				<th>Lesson time</th>
+				<th>Lesson course</th>
+				<th>Lesson teacher</th>
+				<th>Lesson group</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${lessons.empty}">
+				<td colspan="2">No Lessons Available</td>
+			</tr>
+			<tr th:each="lesson : ${lessons}">
+				<td><span th:text="${lesson.lessonID}"> Lesson ID </span></td>
+				<td><span th:text="${lesson.lessonDate}"> Lesson date </span></td>
+				<td><span th:text="${lesson.lessonTime}"> Lesson time </span></td>
+				<td><span th:text="${lesson.course.getCourseName()}"> Lesson course </span></td>
+				<td><span th:text="${lesson.teacher.getPerson().getLastName()}"> Lesson teacher </span></td>
+				<td><span th:text="${lesson.group.getGroupName()}"> Lesson group </span></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

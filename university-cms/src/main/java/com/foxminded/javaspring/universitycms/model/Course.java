@@ -1,14 +1,16 @@
 package com.foxminded.javaspring.universitycms.model;
 
+import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +29,7 @@ public class Course {
 
 	@Column(name = "course_name")
 	private String courseName;
-	
+
 	@Column(name = "course_description")
 	private String courseDescription;
 
@@ -37,4 +39,35 @@ public class Course {
 	@ManyToMany(mappedBy = "courses")
 	private Set<Teacher> teachers;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Course course = (Course) o;
+		return Objects.equals(courseName, course.courseName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(courseName);
+	}
+
+	public String getGroupsNames() {
+		StringBuilder courseGroupsNames = new StringBuilder();
+		for (Group group : groups) {
+			courseGroupsNames.append(group.getGroupName()).append(", ");
+		}
+		return courseGroupsNames.toString();
+	}
+
+	public String getTeachersNames() {
+		StringBuilder courseTeachersNames = new StringBuilder();
+		for (Teacher teacher : teachers) {
+			courseTeachersNames.append(teacher.getPerson().getFirstName()).append(" ")
+					.append(teacher.getPerson().getLastName()).append(", ");
+		}
+		return courseTeachersNames.toString();
+	}
 }

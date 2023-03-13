@@ -1,19 +1,19 @@
 package com.foxminded.javaspring.universitycms.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,8 @@ public class Teacher {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long teacherID;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "teacher_id")
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "person_id")
 	private Person person;
 	
 	@ManyToMany
@@ -51,6 +51,14 @@ public class Teacher {
 	public void removeCourse (Course course) {
 		courses.remove(course);
 		course.getTeachers().remove(this);
+	}
+	
+	public String getCoursesNames() {
+		StringBuilder teacherCoursesNames = new StringBuilder();
+		for (Course course : courses) {
+			teacherCoursesNames.append(course.getCourseName()).append(", ");
+		}
+		return teacherCoursesNames.toString();
 	}
 
 }
