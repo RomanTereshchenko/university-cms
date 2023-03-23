@@ -30,7 +30,7 @@ class LessonControllerTest {
 	@Test
 	void whenGetLessons_thenStatus200() throws Exception {
 
-		mockMvc.perform(get("/api/lessons/all")
+		mockMvc.perform(get("/lessons/all")
 			.contentType(MediaType.APPLICATION_JSON))
 			.andDo(print())
 			.andExpect(view().name("lessons"))

@@ -13,7 +13,7 @@ import com.foxminded.javaspring.universitycms.model.Person;
 import com.foxminded.javaspring.universitycms.service.PersonService;
 
 @Controller
-@RequestMapping("/api/persons")
+@RequestMapping("/persons")
 public class PersonController {
 	
 	@Autowired

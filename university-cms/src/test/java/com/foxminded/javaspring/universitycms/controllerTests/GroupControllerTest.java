@@ -30,7 +30,7 @@ class GroupControllerTest {
 	@Test
 	void whenGetGroups_thenStatus200() throws Exception {
 
-		mockMvc.perform(get("/api/groups/all")
+		mockMvc.perform(get("/groups/all")
 			.contentType(MediaType.APPLICATION_JSON))
 			.andDo(print())
 			.andExpect(view().name("groups"))
