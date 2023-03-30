@@ -3,9 +3,12 @@ package com.foxminded.javaspring.universitycms.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.foxminded.javaspring.universitycms.dao.CourseDao;
@@ -26,6 +29,7 @@ public class CourseService {
 		this.courseDao = courseDao;
 	}
 
+	@Secured({"ROLE_TEACHER", "ROLE_ADMIN"})
 	public Course saveNewCourse(Course course) throws SQLException {
 		var savedNewCourse = courseDao.save(course);
 		log.info("New course " + savedNewCourse.getCourseName() + " saved");
@@ -41,10 +45,12 @@ public class CourseService {
 		log.info("Course with Id " + courseId + " is not found");
 		return null;
 	}
+	
 	public List<Course> findAllCourses() {
 		return courseDao.findAll();
 	}
 
+	@RolesAllowed({"ROLE_TEACHER", "ROLE_ADMIN"})
 	public Course updateCourse(Course course) throws SQLException {
 		var updatingCourse = courseDao.findById(course.getCourseID());
 		if (updatingCourse.isPresent()) {
@@ -56,6 +62,7 @@ public class CourseService {
 		return null;
 	}
 
+	@PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
 	public void deleteCourseById(Long courseId) throws SQLException {
 		log.info("Course with ID " + courseId + " is deleted");
 		courseDao.deleteById(courseId);

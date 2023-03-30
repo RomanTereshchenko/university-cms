@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/index")
 public class IndexController {
 
-
 	@GetMapping
-	public @ResponseBody String findAll(Model model) {
-		return "homePage/index";
-	}
-
-	@GetMapping("/all")
 	public String showAll() {
 		return "index";
 	}

@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.foxminded.javaspring.universitycms.dao.GroupDao;
 import com.foxminded.javaspring.universitycms.dao.PersonDao;
@@ -38,6 +39,7 @@ class StudentServiceTest {
 
 	@Test
 	@Transactional
+	@WithMockUser(username="test",roles={"ADMIN"})
 	void testUpdateStudent() throws SQLException {
 		Student testStudent = new Student();
 		Person person = new Person();

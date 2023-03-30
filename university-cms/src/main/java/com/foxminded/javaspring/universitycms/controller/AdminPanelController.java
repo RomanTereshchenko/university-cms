@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.foxminded.javaspring.universitycms.model.Person;
 import com.foxminded.javaspring.universitycms.model.Role;
-import com.foxminded.javaspring.universitycms.security.SecSecurityConfig;
 import com.foxminded.javaspring.universitycms.service.PersonService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminPanelController {
 	
 	private PersonService personService;
-	private SecSecurityConfig secSecurityConfig;
 	
 	@Autowired
-	public AdminPanelController(PersonService personService, SecSecurityConfig secSecurityConfig) {
+	public AdminPanelController(PersonService personService) {
 		this.personService = personService;
-		this.secSecurityConfig = secSecurityConfig;
 	}
 
 	@GetMapping
@@ -44,7 +41,6 @@ public class AdminPanelController {
 		person.setLastName(personParams.get("lastName"));
 		person.setRole(Role.valueOf(personParams.get("role")));
 		personService.saveNewPerson(person);
-		secSecurityConfig.newUserService(person);
 		log.info(person.toString());
 		return "adminPanel";
 	}

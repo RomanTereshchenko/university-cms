@@ -11,13 +11,10 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import com.foxminded.javaspring.universitycms.dao.CourseDao;
-import com.foxminded.javaspring.universitycms.dao.GroupDao;
 import com.foxminded.javaspring.universitycms.dao.PersonDao;
 import com.foxminded.javaspring.universitycms.dao.TeacherDao;
-import com.foxminded.javaspring.universitycms.model.Course;
-import com.foxminded.javaspring.universitycms.model.Group;
 import com.foxminded.javaspring.universitycms.model.Person;
 import com.foxminded.javaspring.universitycms.model.Role;
 import com.foxminded.javaspring.universitycms.model.Teacher;
@@ -27,20 +24,18 @@ import com.foxminded.javaspring.universitycms.service.TeacherService;
 class TeacherServiceTest {
 	private TeacherDao teacherDao;
 	private PersonDao personDao;
-	private CourseDao courseDao;
 	private TeacherService teacherService;
 
 	@Autowired
-	public TeacherServiceTest(TeacherDao teacherDao, PersonDao personDao, CourseDao courseDao,
-			TeacherService teacherService) {
+	public TeacherServiceTest(TeacherDao teacherDao, PersonDao personDao, TeacherService teacherService) {
 		this.teacherDao = teacherDao;
 		this.personDao = personDao;
-		this.courseDao = courseDao;
 		this.teacherService = teacherService;
 	}
 
 	@Test
 	@Transactional
+	@WithMockUser(username="test",roles={"ADMIN"})
 	void testUpdateTeacher() throws SQLException {
 		Teacher testTeacher = new Teacher();
 		Person person = new Person();
