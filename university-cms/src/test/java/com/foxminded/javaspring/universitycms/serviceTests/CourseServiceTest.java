@@ -1,6 +1,6 @@
 package com.foxminded.javaspring.universitycms.serviceTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.foxminded.javaspring.universitycms.dao.CourseDao;
 import com.foxminded.javaspring.universitycms.model.Course;
@@ -30,6 +31,7 @@ class CourseServiceTest {
 
 	@Test
 	@Transactional
+	@WithMockUser(username="test",roles={"ADMIN"})
 	void testUpdateCourse() throws SQLException {
 		Course testCourse = new Course();
 		testCourse.setCourseName("TestCourse");

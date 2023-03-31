@@ -13,7 +13,7 @@ import com.foxminded.javaspring.universitycms.model.Group;
 import com.foxminded.javaspring.universitycms.service.GroupService;
 
 @Controller
-@RequestMapping("api/groups/")
+@RequestMapping("/groups")
 public class GroupController {
 
 	private GroupService groupService;

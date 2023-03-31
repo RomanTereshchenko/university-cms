@@ -3,9 +3,12 @@ package com.foxminded.javaspring.universitycms.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.foxminded.javaspring.universitycms.dao.GroupDao;
@@ -26,6 +29,7 @@ public class GroupService {
 		this.groupDao = groupDao;
 	}
 
+	@Secured({"ROLE_TEACHER", "ROLE_ADMIN"})
 	public Group saveNewGroup(Group group) {
 		var savingGroup = groupDao.save(group);
 		log.info("New group " + savingGroup.getGroupName() + " saved");
@@ -46,6 +50,7 @@ public class GroupService {
 		return groupDao.findAll();		
 	}
 	
+	@RolesAllowed({"ROLE_TEACHER", "ROLE_ADMIN"})
 	public Group updateGroup(Group group) throws SQLException {
 		var updatingGroup = groupDao.findById(group.getGroupID());
 		if (updatingGroup.isPresent()) {
@@ -57,6 +62,7 @@ public class GroupService {
 		return null;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
 	public void deleteGroupById (Long groupId) {
 		log.info("Group with Id " + groupId + "is deleted");
 		groupDao.deleteById(groupId);

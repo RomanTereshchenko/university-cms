@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.foxminded.javaspring.universitycms.dao.GroupDao;
 import com.foxminded.javaspring.universitycms.model.Group;
@@ -30,6 +31,7 @@ class GroupServiceTest {
 
 	@Test
 	@Transactional
+	@WithMockUser(username="test",roles={"ADMIN"})
 	void testUpdateGroup() throws SQLException {
 		Group testGroup = new Group();
 		testGroup.setGroupName("tt-11");

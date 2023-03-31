@@ -3,9 +3,12 @@ package com.foxminded.javaspring.universitycms.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.foxminded.javaspring.universitycms.dao.LessonDao;
@@ -26,6 +29,7 @@ public class LessonService {
 		this.lessonDao = lessonDao;
 	}
 
+	@Secured({"ROLE_TEACHER", "ROLE_ADMIN"})
 	public Lesson saveNewLesson(Lesson lesson) {
 		var savingLesson = lessonDao.save(lesson);
 		log.info("New lesson " + lesson.getCourse() + lesson.getLessonDate() + lesson.getLessonTime() + " saved");
@@ -46,6 +50,7 @@ public class LessonService {
 		return lessonDao.findAll();
 	}
 	
+	@RolesAllowed({"ROLE_TEACHER", "ROLE_ADMIN"})
 	public Lesson updateLesson(Lesson lesson) {
 		var updatingLesson = lessonDao.findById(lesson.getLessonID());
 		if(updatingLesson.isPresent()) {
@@ -57,6 +62,7 @@ public class LessonService {
 		return null;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
 	public void deleteLessonById(Long lessonId) {
 		log.info("Lesson with Id" + lessonId + " deleted");
 		lessonDao.deleteById(lessonId);	

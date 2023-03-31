@@ -37,31 +37,31 @@ public class PersonGenerator {
 	}
 	
 	public void generateNPersonsForStudent(int countToGenerate) {
-		IntStream.rangeClosed(1, countToGenerate).forEach(personForStudentID -> personDao.save(createPersonForStudent()));
+		IntStream.rangeClosed(1, countToGenerate).forEach(personForStudentID -> personDao.save(createPersonForStudent(personForStudentID)));
 		log.info(countToGenerate + " persons for students generated");
 	}
 	
 	public void generateNPersonsForTeacher(int countToGenerate) {
-		IntStream.rangeClosed(1, countToGenerate).forEach(personForTeacherID -> personDao.save(createPersonForTeacher()));
+		IntStream.rangeClosed(1, countToGenerate).forEach(personForTeacherID -> personDao.save(createPersonForTeacher(personForTeacherID)));
 		log.info(countToGenerate + " persons for teachers generated");
 	}
 	
-	private Person createPersonForStudent() {
+	private Person createPersonForStudent(int studentPersonNumber) {
 		Person personForStudent = new Person();
 		personForStudent.setFirstName(getRandomFirstName());
 		personForStudent.setLastName(getRandomLastName());
-		personForStudent.setLogin("StudentLogin");
-		personForStudent.setPassword("StudentPassword");
+		personForStudent.setLogin("ps" + studentPersonNumber);
+		personForStudent.setPassword("111");
 		personForStudent.setRole(Role.STUDENT);
 		return personForStudent;
 	}
 	
-	private Person createPersonForTeacher() {
+	private Person createPersonForTeacher(int teacherPersonNumber) {
 		Person personForTeacher = new Person();
 		personForTeacher.setFirstName(getRandomFirstName());
 		personForTeacher.setLastName(getRandomLastName());
-		personForTeacher.setLogin("TeacherLogin");
-		personForTeacher.setPassword("TeacherPassword");
+		personForTeacher.setLogin("pt" + teacherPersonNumber);
+		personForTeacher.setPassword("111");
 		personForTeacher.setRole(Role.TEACHER);
 		return personForTeacher;
 	}

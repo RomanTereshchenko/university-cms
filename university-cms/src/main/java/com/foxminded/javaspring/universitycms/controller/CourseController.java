@@ -13,7 +13,7 @@ import com.foxminded.javaspring.universitycms.model.Course;
 import com.foxminded.javaspring.universitycms.service.CourseService;
 
 @Controller
-@RequestMapping("/api/courses")
+@RequestMapping("/courses")
 public class CourseController {
 	
     private CourseService courseService;

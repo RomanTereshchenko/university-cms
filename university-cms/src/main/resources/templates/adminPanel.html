@@ -10,11 +10,39 @@
 </head>
 <body>
 	<main>
-		<h1>Welcome to University</h1>
+		<h1>Admin panel</h1>
+		<form name='f' action="/admin/createPerson" method='POST'>
+			<h3>Create new member of the University</h3>
+			<table>
+				<tr>
+					<td>UserLogin:</td>
+					<td><input type='text' name='login' value=''></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type='password' name='password' value='' /></td>
+				</tr>
+				<tr>
+					<td>First Name:</td>
+					<td><input type='text' name='firstName' value='' /></td>
+				</tr>
+				<tr>
+					<td>Last Name:</td>
+					<td><input type='text' name='lastName' value='' /></td>
+				</tr>
+				<tr>
+					<td>Role:</td>
+					<td><input type='text' name='role' value='' /></td>
+				</tr>
+				<tr>
+					<td><input name="submit" type="submit" value="create" /></td>
+				</tr>
+			</table>
+		</form>
 		<div>
 			<header>
 				<div>
-					<h3>The main entities of the University are:</h3>
+					<h3>List entities of the University:</h3>
 					<nav>
 						<a class="p-2 link-secondary"
 							href="http://localhost:8081/persons/all">Persons</a> <a
@@ -30,8 +58,6 @@
 							href="http://localhost:8081/lessons/all">Lessons</a>
 					</nav>
 				</div>
-				<br>
-				<a href="http://localhost:8081/admin">Admin panel</a>
 			</header>
 		</div>
 	</main>

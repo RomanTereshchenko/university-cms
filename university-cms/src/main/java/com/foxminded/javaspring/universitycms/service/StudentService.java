@@ -2,9 +2,12 @@ package com.foxminded.javaspring.universitycms.service;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.foxminded.javaspring.universitycms.dao.StudentDao;
@@ -25,6 +28,7 @@ public class StudentService {
 		this.studentDao = studentDao;
 	}
 	
+	@Secured("ROLE_ADMIN")
 	public Student saveNewStudent(Student student) {
 		var savingStudent = studentDao.save(student);
 		log.info("New student " + student.getPerson().getFirstName() + " " + student.getPerson().getLastName() + " saved");
@@ -45,6 +49,7 @@ public class StudentService {
 		return studentDao.findAll();
 	}
 	
+	@RolesAllowed("ROLE_ADMIN")
 	public Student updateStudent(Student student) {
 		var updatingStudent = studentDao.findById(student.getStudentID());
 		if (updatingStudent.isPresent()) {
@@ -56,6 +61,7 @@ public class StudentService {
 		return null;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void deleteStudentById(Long studentId) {
 		log.info("Student with Id " + studentId + " deleted");
 		studentDao.deleteById(studentId);
