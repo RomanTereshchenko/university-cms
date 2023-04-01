@@ -39,7 +39,7 @@ class StudentServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdateStudent() throws SQLException {
 		Student testStudent = new Student();
 		Person person = new Person();

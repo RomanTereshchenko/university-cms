@@ -43,7 +43,6 @@ public class GroupGenerator {
 		return groupsLocal;
 	}
 
-
 	private String generateGroupName() {
 		return (new StringBuilder().append(generateRandomChar()).append(generateRandomChar()) + "-"
 				+ generateRandomInt() + generateRandomInt()).toString();

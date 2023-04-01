@@ -29,13 +29,10 @@ class GroupControllerTest {
 	private GroupService groupService;
 
 	@Test
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenGetGroups_thenStatus200() throws Exception {
-		mockMvc.perform(get("/groups/all")
-			.contentType(MediaType.APPLICATION_JSON))
-			.andDo(print())
-			.andExpect(view().name("groups"))
-			.andExpect(status().isOk());
+		mockMvc.perform(get("/groups/all").contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(view().name("groups")).andExpect(status().isOk());
 	}
 
 }

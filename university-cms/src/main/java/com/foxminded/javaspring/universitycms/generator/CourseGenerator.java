@@ -50,7 +50,7 @@ public class CourseGenerator {
 		List<Course> courses = courseDao.findAll();
 		Set<Course> nRandomCourses = new HashSet<>();
 		while (nRandomCourses.size() < numberOfCourses) {
-			nRandomCourses.add(courses.get(random.nextInt(courses.size())));		
+			nRandomCourses.add(courses.get(random.nextInt(courses.size())));
 		}
 		return nRandomCourses;
 	}

@@ -15,20 +15,20 @@ import com.foxminded.javaspring.universitycms.service.PersonService;
 @Controller
 @RequestMapping("/persons")
 public class PersonController {
-	
-	@Autowired
-    private PersonService personService;
 
-    @GetMapping
-    public @ResponseBody List<Person> findAll() {
-        return personService.findAllPersons();
-    }
-    
-    @GetMapping("/all")
-    public String showAll(Model model) {
-    	List<Person> persons = personService.findAllPersons();
-        model.addAttribute("persons", persons);
-        return "persons";
-    }
+	@Autowired
+	private PersonService personService;
+
+	@GetMapping
+	public @ResponseBody List<Person> findAll() {
+		return personService.findAllPersons();
+	}
+
+	@GetMapping("/all")
+	public String showAll(Model model) {
+		List<Person> persons = personService.findAllPersons();
+		model.addAttribute("persons", persons);
+		return "persons";
+	}
 
 }

@@ -31,7 +31,7 @@ class CourseServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdateCourse() throws SQLException {
 		Course testCourse = new Course();
 		testCourse.setCourseName("TestCourse");

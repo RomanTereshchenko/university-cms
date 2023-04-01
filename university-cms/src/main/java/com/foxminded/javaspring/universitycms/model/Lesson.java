@@ -24,26 +24,26 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "lessons", schema = "university")
 public class Lesson {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long lessonID;
-	
+
 	@Column(name = "lesson_date")
 	private LocalDate lessonDate;
-	
+
 	@Column(name = "lesson_time")
 	private LocalTime lessonTime;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "course_id")
 	private Course course;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "group_id")
 	private Group group;
@@ -53,5 +53,5 @@ public class Lesson {
 		this.teacher = teacher;
 		this.group = group;
 	}
-	
+
 }

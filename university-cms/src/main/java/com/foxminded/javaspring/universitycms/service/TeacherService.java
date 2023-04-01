@@ -20,21 +20,22 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Transactional
 public class TeacherService {
-	
+
 	private TeacherDao teacherDao;
 
 	@Autowired
 	public TeacherService(TeacherDao teacherDao) {
 		this.teacherDao = teacherDao;
 	}
-	
+
 	@Secured("ROLE_ADMIN")
 	public Teacher saveNewTeacher(Teacher teacher) {
 		var savingTeacher = teacherDao.save(teacher);
-		log.info("New teacher " + teacher.getPerson().getFirstName() + " " + teacher.getPerson().getLastName() + " saved");
+		log.info("New teacher " + teacher.getPerson().getFirstName() + " " + teacher.getPerson().getLastName()
+				+ " saved");
 		return savingTeacher;
 	}
-	
+
 	public Teacher findTeacherById(Long teacherId) {
 		var teacher = teacherDao.findById(teacherId);
 		if (teacher.isPresent()) {
@@ -44,8 +45,8 @@ public class TeacherService {
 		log.info("Teacher with Id " + teacherId + " not found");
 		return null;
 	}
-	
-	public List<Teacher> findAllTeachers(){
+
+	public List<Teacher> findAllTeachers() {
 		return teacherDao.findAll();
 	}
 
@@ -54,13 +55,14 @@ public class TeacherService {
 		var updatingTeacher = teacherDao.findById(teacher.getTeacherID());
 		if (updatingTeacher.isPresent()) {
 			teacherDao.save(teacher);
-			log.info("Teacher " + teacher.getPerson().getFirstName() + " " + teacher.getPerson().getLastName() + " updated");
+			log.info("Teacher " + teacher.getPerson().getFirstName() + " " + teacher.getPerson().getLastName()
+					+ " updated");
 			return teacher;
 		}
 		log.info("This teacher does not exist in the database");
 		return null;
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void deleteTeacherById(Long teacherId) {
 		log.info("Teacher with Id " + teacherId + " deleted");

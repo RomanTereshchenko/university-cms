@@ -45,7 +45,7 @@ public class LessonServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdateLesson() throws SQLException {
 		Lesson testLesson = new Lesson();
 		testLesson.setLessonDate(LocalDate.of(2015, 1, 20));

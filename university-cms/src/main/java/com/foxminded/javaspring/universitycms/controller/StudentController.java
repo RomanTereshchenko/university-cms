@@ -15,21 +15,21 @@ import com.foxminded.javaspring.universitycms.service.StudentService;
 @Controller
 @RequestMapping("/students")
 public class StudentController {
-	
+
 	private StudentService studentService;
 
 	@Autowired
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
 	}
-	
+
 	@GetMapping
-	public @ResponseBody List<Student> findAll(){
+	public @ResponseBody List<Student> findAll() {
 		return studentService.findAllStudents();
 	}
-	
+
 	@GetMapping("/all")
-	public String showAll (Model model) {
+	public String showAll(Model model) {
 		List<Student> students = studentService.findAllStudents();
 		model.addAttribute("students", students);
 		return "students";

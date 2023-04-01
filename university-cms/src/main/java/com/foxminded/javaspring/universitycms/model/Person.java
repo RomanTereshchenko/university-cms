@@ -1,6 +1,5 @@
 package com.foxminded.javaspring.universitycms.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,27 +17,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table (name = "persons", schema = "university")
+@Table(name = "persons", schema = "university")
 public class Person {
-	
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column (name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	protected Long personID;
-	
-	@Column (name = "login")
+
+	@Column(name = "login")
 	protected String login;
-	
-	@Column (name = "password")
+
+	@Column(name = "password")
 	protected String password;
-	
-	@Column (name = "first_name")
+
+	@Column(name = "first_name")
 	protected String firstName;
-	
-	@Column (name = "last_name")
+
+	@Column(name = "last_name")
 	protected String lastName;
-	
-	@Column (name = "role")
+
+	@Column(name = "role")
 	@MapKeyEnumerated(value = EnumType.STRING)
 	protected Role role;
 

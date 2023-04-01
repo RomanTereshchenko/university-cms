@@ -31,7 +31,7 @@ class GroupServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdateGroup() throws SQLException {
 		Group testGroup = new Group();
 		testGroup.setGroupName("tt-11");

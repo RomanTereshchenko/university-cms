@@ -20,22 +20,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Transactional
 public class StudentService {
-	
+
 	private StudentDao studentDao;
 
 	@Autowired
 	public StudentService(StudentDao studentDao) {
 		this.studentDao = studentDao;
 	}
-	
+
 	@Secured("ROLE_ADMIN")
 	public Student saveNewStudent(Student student) {
 		var savingStudent = studentDao.save(student);
-		log.info("New student " + student.getPerson().getFirstName() + " " + student.getPerson().getLastName() + " saved");
+		log.info("New student " + student.getPerson().getFirstName() + " " + student.getPerson().getLastName()
+				+ " saved");
 		return savingStudent;
 	}
-	
-	public Student findStudentById (Long studentId) {
+
+	public Student findStudentById(Long studentId) {
 		var student = studentDao.findById(studentId);
 		if (student.isPresent()) {
 			log.info("Student with Id " + studentId + " found");
@@ -44,23 +45,24 @@ public class StudentService {
 		log.info("Student with Id " + studentId + " not found");
 		return null;
 	}
-	
-	public List<Student> findAllStudents(){
+
+	public List<Student> findAllStudents() {
 		return studentDao.findAll();
 	}
-	
+
 	@RolesAllowed("ROLE_ADMIN")
 	public Student updateStudent(Student student) {
 		var updatingStudent = studentDao.findById(student.getStudentID());
 		if (updatingStudent.isPresent()) {
 			studentDao.save(student);
-			log.info("Student " +  student.getPerson().getFirstName() + " " + student.getPerson().getLastName() + " updated");
+			log.info("Student " + student.getPerson().getFirstName() + " " + student.getPerson().getLastName()
+					+ " updated");
 			return student;
 		}
 		log.info("This student does not exist in the database");
 		return null;
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void deleteStudentById(Long studentId) {
 		log.info("Student with Id " + studentId + " deleted");

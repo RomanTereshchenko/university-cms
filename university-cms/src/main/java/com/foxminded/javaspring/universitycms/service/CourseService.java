@@ -29,7 +29,7 @@ public class CourseService {
 		this.courseDao = courseDao;
 	}
 
-	@Secured({"ROLE_TEACHER", "ROLE_ADMIN"})
+	@Secured({ "ROLE_TEACHER", "ROLE_ADMIN" })
 	public Course saveNewCourse(Course course) throws SQLException {
 		var savedNewCourse = courseDao.save(course);
 		log.info("New course " + savedNewCourse.getCourseName() + " saved");
@@ -45,12 +45,12 @@ public class CourseService {
 		log.info("Course with Id " + courseId + " is not found");
 		return null;
 	}
-	
+
 	public List<Course> findAllCourses() {
 		return courseDao.findAll();
 	}
 
-	@RolesAllowed({"ROLE_TEACHER", "ROLE_ADMIN"})
+	@RolesAllowed({ "ROLE_TEACHER", "ROLE_ADMIN" })
 	public Course updateCourse(Course course) throws SQLException {
 		var updatingCourse = courseDao.findById(course.getCourseID());
 		if (updatingCourse.isPresent()) {

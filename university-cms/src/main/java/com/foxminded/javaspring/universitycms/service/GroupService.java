@@ -29,7 +29,7 @@ public class GroupService {
 		this.groupDao = groupDao;
 	}
 
-	@Secured({"ROLE_TEACHER", "ROLE_ADMIN"})
+	@Secured({ "ROLE_TEACHER", "ROLE_ADMIN" })
 	public Group saveNewGroup(Group group) {
 		var savingGroup = groupDao.save(group);
 		log.info("New group " + savingGroup.getGroupName() + " saved");
@@ -38,19 +38,19 @@ public class GroupService {
 
 	public Group findGroupById(Long groupId) throws SQLException {
 		var group = groupDao.findById(groupId);
-		if(group.isPresent()) {
+		if (group.isPresent()) {
 			log.info("Group with Id " + groupId + " is found");
 			return group.get();
 		}
 		log.info("Group with Id " + groupId + " is not found");
 		return null;
 	}
-	
+
 	public List<Group> findAllGroups() {
-		return groupDao.findAll();		
+		return groupDao.findAll();
 	}
-	
-	@RolesAllowed({"ROLE_TEACHER", "ROLE_ADMIN"})
+
+	@RolesAllowed({ "ROLE_TEACHER", "ROLE_ADMIN" })
 	public Group updateGroup(Group group) throws SQLException {
 		var updatingGroup = groupDao.findById(group.getGroupID());
 		if (updatingGroup.isPresent()) {
@@ -61,9 +61,9 @@ public class GroupService {
 		log.info("This group does not exist in the database");
 		return null;
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
-	public void deleteGroupById (Long groupId) {
+	public void deleteGroupById(Long groupId) {
 		log.info("Group with Id " + groupId + "is deleted");
 		groupDao.deleteById(groupId);
 	}

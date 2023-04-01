@@ -41,10 +41,11 @@ public class StudentGenerator {
 		List<Group> groups = groupDao.findAll();
 		for (Person person : persons) {
 			if (person.getRole() == Role.STUDENT) {
-			Student student = new Student();
-			student.setPerson(person);
-			student.setGroup(groups.get(random.nextInt(groups.size()-1)));
-			studentDao.save(student);}
+				Student student = new Student();
+				student.setPerson(person);
+				student.setGroup(groups.get(random.nextInt(groups.size() - 1)));
+				studentDao.save(student);
+			}
 		}
 		log.info("Students generated");
 	}

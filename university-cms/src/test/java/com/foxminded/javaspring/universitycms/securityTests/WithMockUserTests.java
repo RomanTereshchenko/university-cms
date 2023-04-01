@@ -41,12 +41,12 @@ class WithMockUserTests {
 		String message = getMessage();
 		assertThat(message.contains("Username=customUsername"));
 	}
-	
+
 	@Test
-	@WithMockUser(username="admin",roles={"ADMIN"})
+	@WithMockUser(username = "admin", roles = { "ADMIN" })
 	void getMessageWithMockUserCustomUser() {
 		String message = getMessage();
 		assertThat(message.contains("Granted Authorities=[ROLE_USER]"));
 	}
-	
+
 }

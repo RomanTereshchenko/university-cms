@@ -34,7 +34,7 @@ public class PersonService {
 		log.info("New person " + person.getFirstName() + " " + person.getLastName() + " saved");
 		return savingPerson;
 	}
-	
+
 	public Person findPersonById(Long personId) {
 		var person = personDao.findById(personId);
 		if (person.isPresent()) {
@@ -44,11 +44,11 @@ public class PersonService {
 		log.info("Person with Id" + personId + " not found");
 		return null;
 	}
-	
-	public List<Person> findAllPersons(){
+
+	public List<Person> findAllPersons() {
 		return personDao.findAll();
 	}
-	
+
 	@RolesAllowed("ROLE_ADMIN")
 	public Person updatePerson(Person person) {
 		var updatingPerson = personDao.findById(person.getPersonID());
@@ -60,7 +60,7 @@ public class PersonService {
 		log.info("This person does not exists in the database");
 		return null;
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void deletePersonById(Long personId) {
 		log.info("Person with Id " + personId + " deleted");

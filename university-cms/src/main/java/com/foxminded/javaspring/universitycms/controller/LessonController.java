@@ -15,23 +15,23 @@ import com.foxminded.javaspring.universitycms.service.LessonService;
 @Controller
 @RequestMapping("/lessons")
 public class LessonController {
-	
-    private LessonService lessonService;
-    
-    @Autowired
-    public LessonController(LessonService lessonService) {
+
+	private LessonService lessonService;
+
+	@Autowired
+	public LessonController(LessonService lessonService) {
 		this.lessonService = lessonService;
 	}
 
 	@GetMapping
-    public @ResponseBody List<Lesson> findAll() {
-        return lessonService.findAllLessons();
-    }
-	
-    @GetMapping("/all")
-    public String showAll(Model model) {
-    	List<Lesson> lessons = lessonService.findAllLessons();
-        model.addAttribute("lessons", lessons);
-        return "lessons";
-    }
+	public @ResponseBody List<Lesson> findAll() {
+		return lessonService.findAllLessons();
+	}
+
+	@GetMapping("/all")
+	public String showAll(Model model) {
+		List<Lesson> lessons = lessonService.findAllLessons();
+		model.addAttribute("lessons", lessons);
+		return "lessons";
+	}
 }

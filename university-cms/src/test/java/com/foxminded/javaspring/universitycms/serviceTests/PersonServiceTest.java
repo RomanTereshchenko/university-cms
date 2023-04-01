@@ -30,7 +30,7 @@ public class PersonServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdatePerson() throws SQLException {
 		Person testPerson = new Person();
 		testPerson.setLogin("login");

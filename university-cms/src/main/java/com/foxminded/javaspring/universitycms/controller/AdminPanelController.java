@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 @Slf4j
 public class AdminPanelController {
-	
+
 	private PersonService personService;
-	
+
 	@Autowired
 	public AdminPanelController(PersonService personService) {
 		this.personService = personService;
@@ -31,7 +31,7 @@ public class AdminPanelController {
 	public String showAll() {
 		return "adminPanel";
 	}
-	
+
 	@PostMapping("/createPerson")
 	public String createNewPerson(@RequestParam Map<String, String> personParams) {
 		Person person = new Person();

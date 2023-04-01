@@ -34,25 +34,25 @@ public class Group {
 	@ManyToMany
 	@JoinTable(name = "groups_courses", schema = "university", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
-	
+
 	public Group(Set<Course> courses) {
 		this.courses = courses;
 	}
-	
+
 	public void addCourse(Course course) {
 		courses.add(course);
 		course.getGroups().add(this);
 	}
-	
+
 	public void removeCourse(Course course) {
 		courses.add(course);
 		course.getGroups().remove(this);
 	}
-	
+
 	public String getCoursesNames() {
 		StringBuilder groupCoursesNames = new StringBuilder();
 		for (Course course : courses) {
-				groupCoursesNames.append(course.getCourseName()).append(", ");
+			groupCoursesNames.append(course.getCourseName()).append(", ");
 		}
 		return groupCoursesNames.toString();
 	}
