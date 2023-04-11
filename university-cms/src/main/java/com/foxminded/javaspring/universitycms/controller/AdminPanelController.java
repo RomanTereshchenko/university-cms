@@ -1,5 +1,6 @@
 package com.foxminded.javaspring.universitycms.controller;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AdminPanelController {
 	}
 
 	@PostMapping("/createPerson")
-	public String createNewPerson(@RequestParam Map<String, String> personParams) {
+	public String createNewPerson(@RequestParam Map<String, String> personParams) throws SQLException {
 		Person person = new Person();
 		person.setLogin(personParams.get("login"));
 		person.setPassword(personParams.get("password"));
@@ -41,7 +42,7 @@ public class AdminPanelController {
 		person.setLastName(personParams.get("lastName"));
 		person.setRole(Role.valueOf(personParams.get("role")));
 		personService.saveNewPerson(person);
-		log.info(person.toString());
+		log.info("New person created. " + person.toString());
 		return "adminPanel";
 	}
 }

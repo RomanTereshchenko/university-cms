@@ -33,8 +33,6 @@ public class SecSecurityConfig {
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
 		InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
-		UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("000")).roles("ADMIN").build();
-		inMemoryUserDetailsManager.createUser(admin);
 		List<Person> allpersons = personService.findAllPersons();
 		for (Person person : allpersons) {
 			UserDetails userPerson = User.withUsername(person.getLogin())

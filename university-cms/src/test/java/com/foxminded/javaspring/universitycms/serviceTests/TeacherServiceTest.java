@@ -55,7 +55,7 @@ class TeacherServiceTest {
 		List<Teacher> teachers = teacherDao.findAll();
 		Teacher savedTeacher = teachers.get(0);
 		assertEquals("login2", savedTeacher.getPerson().getLogin());
-		Teacher testTeacher2 = new Teacher(testTeacher.getTeacherID() + 1, person, new HashSet<>());
+		Teacher testTeacher2 = new Teacher(testTeacher.getTeacherID() + 1, person, new HashSet<>(), new HashSet<>());
 		assertEquals(null, teacherService.updateTeacher(testTeacher2));
 	}
 

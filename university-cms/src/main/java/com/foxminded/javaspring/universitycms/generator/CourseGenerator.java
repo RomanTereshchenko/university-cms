@@ -31,8 +31,7 @@ public class CourseGenerator {
 		this.random = random;
 	}
 
-	public final List<String> courseNames = Arrays.asList("Mathematics", "Science", "Health", "Handwriting", "Art",
-			"Music", "Leadership", "Speech", "English", "Algebra");
+	public final List<String> courseNames = Arrays.asList("Mathematics", "Science", "Health", "Handwriting", "Art");
 
 	public List<Course> generateCourses() {
 		List<Course> coursesLocal = new ArrayList<>();

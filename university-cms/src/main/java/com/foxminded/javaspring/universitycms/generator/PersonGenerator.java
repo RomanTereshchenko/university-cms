@@ -47,6 +47,17 @@ public class PersonGenerator {
 				.forEach(personForTeacherID -> personDao.save(createPersonForTeacher(personForTeacherID)));
 		log.info(countToGenerate + " persons for teachers generated");
 	}
+	
+	public void generatePersonForAdmin() {
+		Person personForAdmin = new Person();
+		personForAdmin.setFirstName(getRandomFirstName());
+		personForAdmin.setLastName(getRandomLastName());
+		personForAdmin.setLogin("admin");
+		personForAdmin.setPassword("000");
+		personForAdmin.setRole(Role.ADMIN);
+		personDao.save(personForAdmin);
+		log.info("Person for admin generated");
+	}
 
 	private Person createPersonForStudent(int studentPersonNumber) {
 		Person personForStudent = new Person();

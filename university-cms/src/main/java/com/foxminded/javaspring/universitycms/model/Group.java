@@ -1,7 +1,9 @@
 package com.foxminded.javaspring.universitycms.model;
 
+import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -34,9 +37,30 @@ public class Group {
 	@ManyToMany
 	@JoinTable(name = "groups_courses", schema = "university", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
+	
+	@OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+	private Set<Student> students;
+	
+	@OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+	private Set<Lesson> lessons;
 
 	public Group(Set<Course> courses) {
 		this.courses = courses;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Group group = (Group) o;
+		return Objects.equals(groupName, group.groupName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(groupName);
 	}
 
 	public void addCourse(Course course) {
@@ -45,7 +69,7 @@ public class Group {
 	}
 
 	public void removeCourse(Course course) {
-		courses.add(course);
+		courses.remove(course);
 		course.getGroups().remove(this);
 	}
 

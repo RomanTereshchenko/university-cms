@@ -1,6 +1,7 @@
 package com.foxminded.javaspring.universitycms.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.foxminded.javaspring.universitycms.dao.TeacherDao;
+import com.foxminded.javaspring.universitycms.model.Course;
 import com.foxminded.javaspring.universitycms.model.Teacher;
 
 import lombok.var;
@@ -67,5 +69,17 @@ public class TeacherService {
 	public void deleteTeacherById(Long teacherId) {
 		log.info("Teacher with Id " + teacherId + " deleted");
 		teacherDao.deleteById(teacherId);
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public Teacher removeCourseFromTeacher(Course course, Teacher teacher) {
+		var updatingTeacher = teacherDao.findById(teacher.getTeacherID());
+		Set<Course> teacherCourses = updatingTeacher.get().getCourses();
+		teacherCourses.remove(course);
+		updatingTeacher.get().setCourses(teacherCourses);
+		teacherDao.save(updatingTeacher.get());
+		log.info("Course " + course.getCourseName() + "is removed from teacher " + teacher.getPerson().getFirstName()
+				+ " " + teacher.getPerson().getLastName());
+		return updatingTeacher.get();
 	}
 }

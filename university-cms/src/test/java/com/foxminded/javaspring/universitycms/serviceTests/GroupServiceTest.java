@@ -42,7 +42,7 @@ class GroupServiceTest {
 		List<Group> groups = groupDao.findAll();
 		Group savedGroup = groups.get(0);
 		assertEquals("tt-22", savedGroup.getGroupName());
-		Group testGroup2 = new Group(testGroup.getGroupID() + 1, "TestGroup2", new HashSet<>());
+		Group testGroup2 = new Group(testGroup.getGroupID() + 1, "TestGroup2", new HashSet<>(), new HashSet<>(), new HashSet<>());
 		assertEquals(null, groupService.updateGroup(testGroup2));
 	}
 

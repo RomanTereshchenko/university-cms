@@ -1,5 +1,6 @@
 package com.foxminded.javaspring.universitycms.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -29,7 +30,7 @@ public class PersonService {
 	}
 
 	@Secured("ROLE_ADMIN")
-	public Person saveNewPerson(Person person) {
+	public Person saveNewPerson(Person person) throws SQLException {
 		var savingPerson = personDao.save(person);
 		log.info("New person " + person.getFirstName() + " " + person.getLastName() + " saved");
 		return savingPerson;
@@ -38,10 +39,20 @@ public class PersonService {
 	public Person findPersonById(Long personId) {
 		var person = personDao.findById(personId);
 		if (person.isPresent()) {
-			log.info("Person with Id" + personId + "found");
+			log.info("Person with Id " + personId + " found");
 			return person.get();
 		}
-		log.info("Person with Id" + personId + " not found");
+		log.info("Person with Id " + personId + " not found");
+		return null;
+	}
+
+	public Person findPersonByLogin(String login) {
+		var person = personDao.findByLogin(login);
+		if (person.isPresent()) {
+			log.info("Person with login " + login + " found");
+			return person.get();
+		}
+		log.info("Person with login " + login + " not found");
 		return null;
 	}
 
