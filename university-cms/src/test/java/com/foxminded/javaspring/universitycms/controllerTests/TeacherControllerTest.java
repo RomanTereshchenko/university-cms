@@ -28,13 +28,10 @@ class TeacherControllerTest {
 	private CourseService courseService;
 
 	@Test
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenGetCourses_thenStatus200() throws Exception {
-		mockMvc.perform(get("/courses/all")
-			.contentType(MediaType.APPLICATION_JSON))
-			.andDo(print())
-			.andExpect(view().name("courses"))
-			.andExpect(status().isOk());
+		mockMvc.perform(get("/courses/all").contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(view().name("courses")).andExpect(status().isOk());
 	}
 
 }

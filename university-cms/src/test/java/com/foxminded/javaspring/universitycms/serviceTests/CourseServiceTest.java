@@ -31,7 +31,7 @@ class CourseServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdateCourse() throws SQLException {
 		Course testCourse = new Course();
 		testCourse.setCourseName("TestCourse");
@@ -45,7 +45,7 @@ class CourseServiceTest {
 		Course savedCourse = courses.get(0);
 		assertEquals("UpdatedTestCourse", savedCourse.getCourseName());
 		Course testCourse2 = new Course(testCourse.getCourseID() + 1, "TestCourse2", "Description2", new HashSet<>(),
-				new HashSet<>());
+				new HashSet<>(), new HashSet<>());
 		assertEquals(null, courseService.updateCourse(testCourse2));
 	}
 

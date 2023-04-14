@@ -31,8 +31,7 @@ public class CourseGenerator {
 		this.random = random;
 	}
 
-	public final List<String> courseNames = Arrays.asList("Mathematics", "Science", "Health", "Handwriting", "Art",
-			"Music", "Leadership", "Speech", "English", "Algebra");
+	public final List<String> courseNames = Arrays.asList("Mathematics", "Science", "Health", "Handwriting", "Art");
 
 	public List<Course> generateCourses() {
 		List<Course> coursesLocal = new ArrayList<>();
@@ -50,7 +49,7 @@ public class CourseGenerator {
 		List<Course> courses = courseDao.findAll();
 		Set<Course> nRandomCourses = new HashSet<>();
 		while (nRandomCourses.size() < numberOfCourses) {
-			nRandomCourses.add(courses.get(random.nextInt(courses.size())));		
+			nRandomCourses.add(courses.get(random.nextInt(courses.size())));
 		}
 		return nRandomCourses;
 	}

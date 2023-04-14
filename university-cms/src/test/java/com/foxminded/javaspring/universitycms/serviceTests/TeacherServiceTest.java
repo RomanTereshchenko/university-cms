@@ -35,7 +35,7 @@ class TeacherServiceTest {
 
 	@Test
 	@Transactional
-	@WithMockUser(username="test",roles={"ADMIN"})
+	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void testUpdateTeacher() throws SQLException {
 		Teacher testTeacher = new Teacher();
 		Person person = new Person();
@@ -55,7 +55,7 @@ class TeacherServiceTest {
 		List<Teacher> teachers = teacherDao.findAll();
 		Teacher savedTeacher = teachers.get(0);
 		assertEquals("login2", savedTeacher.getPerson().getLogin());
-		Teacher testTeacher2 = new Teacher(testTeacher.getTeacherID() + 1, person, new HashSet<>());
+		Teacher testTeacher2 = new Teacher(testTeacher.getTeacherID() + 1, person, new HashSet<>(), new HashSet<>());
 		assertEquals(null, teacherService.updateTeacher(testTeacher2));
 	}
 

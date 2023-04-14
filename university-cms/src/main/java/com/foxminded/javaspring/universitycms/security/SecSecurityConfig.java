@@ -32,16 +32,14 @@ public class SecSecurityConfig {
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
-		List<Person> allpersons = personService.findAllPersons();
-		UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("000")).roles("ADMIN").build();
 		InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+		List<Person> allpersons = personService.findAllPersons();
 		for (Person person : allpersons) {
 			UserDetails userPerson = User.withUsername(person.getLogin())
 					.password(passwordEncoder().encode(person.getPassword())).roles(person.getRole().toString())
 					.build();
 			inMemoryUserDetailsManager.createUser(userPerson);
 		}
-		inMemoryUserDetailsManager.createUser(admin);
 		return inMemoryUserDetailsManager;
 	}
 
@@ -52,9 +50,23 @@ public class SecSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/anonymous")
-				.anonymous().antMatchers("/login*").permitAll().anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/index", true).failureUrl("/login-error");
+		http
+		.csrf()
+		.disable()
+		.authorizeRequests()
+		.antMatchers("/admin/**")
+		.hasRole("ADMIN")
+		.antMatchers("/anonymous")
+		.anonymous()
+		.antMatchers("/login*")
+		.permitAll()
+		.anyRequest()
+		.authenticated()
+		.and()
+		.formLogin()
+		.loginPage("/login")
+		.defaultSuccessUrl("/index", true)
+		.failureUrl("/login-error");
 		return http.build();
 	}
 

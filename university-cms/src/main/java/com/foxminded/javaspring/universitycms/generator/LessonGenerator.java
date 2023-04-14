@@ -59,9 +59,9 @@ public class LessonGenerator {
 		Lesson lesson = new Lesson();
 		lesson.setLessonDate(lessonDate);
 		lesson.setLessonTime(lessonTime);
-		lesson.setCourse(courses.get(random.nextInt(courses.size()-1)));
-		lesson.setTeacher(teachers.get(random.nextInt(teachers.size()-1)));
-		lesson.setGroup(groups.get(random.nextInt(groups.size()-1)));
+		lesson.setCourse(courses.get(random.nextInt(courses.size() - 1)));
+		lesson.setTeacher(teachers.get(random.nextInt(teachers.size() - 1)));
+		lesson.setGroup(groups.get(random.nextInt(groups.size() - 1)));
 		return lesson;
 	}
 

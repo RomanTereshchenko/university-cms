@@ -3,12 +3,14 @@ package com.foxminded.javaspring.universitycms.model;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -33,11 +35,14 @@ public class Course {
 	@Column(name = "course_description")
 	private String courseDescription;
 
-	@ManyToMany(mappedBy = "courses")
+	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
 	private Set<Group> groups;
 
-	@ManyToMany(mappedBy = "courses")
+	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
 	private Set<Teacher> teachers;
+	
+	@OneToMany (mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Lesson> lessons;
 
 	@Override
 	public boolean equals(Object o) {
@@ -55,6 +60,7 @@ public class Course {
 	}
 
 	public String getGroupsNames() {
+		if (this.groups == null) {return "-";}
 		StringBuilder courseGroupsNames = new StringBuilder();
 		for (Group group : groups) {
 			courseGroupsNames.append(group.getGroupName()).append(", ");
@@ -63,6 +69,7 @@ public class Course {
 	}
 
 	public String getTeachersNames() {
+		if (this.groups == null) {return "-";}
 		StringBuilder courseTeachersNames = new StringBuilder();
 		for (Teacher teacher : teachers) {
 			courseTeachersNames.append(teacher.getPerson().getFirstName()).append(" ")

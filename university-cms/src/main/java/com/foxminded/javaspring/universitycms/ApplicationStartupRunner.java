@@ -26,9 +26,9 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 	private LessonGenerator lessonGenerator;
 
 	private static final int NUMBER_OF_GROUPS = 5;
-	private static final int NUMBER_OF_STUDENTS = 50;
-	private static final int NUMBER_OF_TEACHERS = 10;
-	private static final int NUMBER_OF_LESSONS = 10;
+	private static final int NUMBER_OF_STUDENTS = 20;
+	private static final int NUMBER_OF_TEACHERS = 5;
+	private static final int NUMBER_OF_LESSONS = 5;
 
 	@Autowired
 	public ApplicationStartupRunner(DBCleaner dbCleaner, CourseGenerator courseGenerator, GroupGenerator groupGenerator,
@@ -50,6 +50,7 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 		groupGenerator.generateNGroups(NUMBER_OF_GROUPS);
 		personGenerator.generateNPersonsForStudent(NUMBER_OF_STUDENTS);
 		personGenerator.generateNPersonsForTeacher(NUMBER_OF_TEACHERS);
+		personGenerator.generatePersonForAdmin();
 		studentGenerator.generateStudents();
 		teacherGenerator.generateTeachers();
 		lessonGenerator.generateNLessons(NUMBER_OF_LESSONS);

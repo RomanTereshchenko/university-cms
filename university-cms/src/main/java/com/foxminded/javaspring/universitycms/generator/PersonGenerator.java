@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class PersonGenerator {
-	
+
 	private Random random;
 	private List<String> studentFirstNames = Arrays.asList("Lexi", "Elouise", "Wilbur", "Glenda", "Judah", "Salahuddin",
 			"Juliet", "Tanner", "Luella", "Enid", "Hadiya", "Rares", "Bryan", "Patsy", "Eshan", "Lester", "Bentley",
@@ -29,23 +29,36 @@ public class PersonGenerator {
 			"Garrett", "Peralta", "Mcknight", "O'Quinn", "Simons", "Kelley", "Trejo", "Dougherty", "Palacios", "Murphy",
 			"Gordon", "Mcgee", "Strong", "Philip");
 	private PersonDao personDao;
-	
+
 	@Autowired
 	public PersonGenerator(Random random, PersonDao personDao) {
 		this.random = random;
 		this.personDao = personDao;
 	}
-	
+
 	public void generateNPersonsForStudent(int countToGenerate) {
-		IntStream.rangeClosed(1, countToGenerate).forEach(personForStudentID -> personDao.save(createPersonForStudent(personForStudentID)));
+		IntStream.rangeClosed(1, countToGenerate)
+				.forEach(personForStudentID -> personDao.save(createPersonForStudent(personForStudentID)));
 		log.info(countToGenerate + " persons for students generated");
 	}
-	
+
 	public void generateNPersonsForTeacher(int countToGenerate) {
-		IntStream.rangeClosed(1, countToGenerate).forEach(personForTeacherID -> personDao.save(createPersonForTeacher(personForTeacherID)));
+		IntStream.rangeClosed(1, countToGenerate)
+				.forEach(personForTeacherID -> personDao.save(createPersonForTeacher(personForTeacherID)));
 		log.info(countToGenerate + " persons for teachers generated");
 	}
 	
+	public void generatePersonForAdmin() {
+		Person personForAdmin = new Person();
+		personForAdmin.setFirstName(getRandomFirstName());
+		personForAdmin.setLastName(getRandomLastName());
+		personForAdmin.setLogin("admin");
+		personForAdmin.setPassword("000");
+		personForAdmin.setRole(Role.ADMIN);
+		personDao.save(personForAdmin);
+		log.info("Person for admin generated");
+	}
+
 	private Person createPersonForStudent(int studentPersonNumber) {
 		Person personForStudent = new Person();
 		personForStudent.setFirstName(getRandomFirstName());
@@ -55,7 +68,7 @@ public class PersonGenerator {
 		personForStudent.setRole(Role.STUDENT);
 		return personForStudent;
 	}
-	
+
 	private Person createPersonForTeacher(int teacherPersonNumber) {
 		Person personForTeacher = new Person();
 		personForTeacher.setFirstName(getRandomFirstName());
@@ -65,13 +78,13 @@ public class PersonGenerator {
 		personForTeacher.setRole(Role.TEACHER);
 		return personForTeacher;
 	}
-	
+
 	private String getRandomFirstName() {
-		return studentFirstNames.get(random.nextInt(studentFirstNames.size()-1));
+		return studentFirstNames.get(random.nextInt(studentFirstNames.size() - 1));
 	}
 
 	private String getRandomLastName() {
-		return studentLastNames.get(random.nextInt(studentLastNames.size()-1));
+		return studentLastNames.get(random.nextInt(studentLastNames.size() - 1));
 	}
 
 }

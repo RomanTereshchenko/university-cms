@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,27 +23,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "lessons", schema = "university")
 public class Lesson {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long lessonID;
-	
+
 	@Column(name = "lesson_date")
 	private LocalDate lessonDate;
-	
+
 	@Column(name = "lesson_time")
 	private LocalTime lessonTime;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")
 	private Course course;
-	
-	@OneToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
 	private Group group;
 
@@ -53,5 +52,5 @@ public class Lesson {
 		this.teacher = teacher;
 		this.group = group;
 	}
-	
+
 }

@@ -18,14 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class DBCleaner {
-	
+
 	private CourseDao courseDao;
 	private GroupDao groupDao;
 	private LessonDao lessonDao;
 	private PersonDao personDao;
 	private StudentDao studentDao;
 	private TeacherDao teacherDao;
-	
+
 	@Autowired
 	public DBCleaner(CourseDao courseDao, GroupDao groupDao, LessonDao lessonDao, PersonDao personDao,
 			StudentDao studentDao, TeacherDao teacherDao) {
@@ -36,7 +36,7 @@ public class DBCleaner {
 		this.studentDao = studentDao;
 		this.teacherDao = teacherDao;
 	}
-	
+
 	public void cleanDB() {
 		lessonDao.deleteAll();
 		studentDao.deleteAll();
@@ -46,5 +46,5 @@ public class DBCleaner {
 		groupDao.deleteAll();
 		log.info("Database cleaned");
 	}
-	
+
 }
