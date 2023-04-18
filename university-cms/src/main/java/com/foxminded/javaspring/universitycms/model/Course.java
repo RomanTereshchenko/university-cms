@@ -41,7 +41,7 @@ public class Course {
 	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
 	private Set<Teacher> teachers;
 	
-	@OneToMany (mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany (mappedBy = "course", cascade = CascadeType.ALL)
 	private Set<Lesson> lessons;
 
 	@Override
