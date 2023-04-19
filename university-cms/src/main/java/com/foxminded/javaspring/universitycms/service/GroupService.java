@@ -64,7 +64,7 @@ public class GroupService {
 
 	@PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')")
 	public void deleteGroupById(Long groupId) {
-		log.info("Group with Id " + groupId + "is deleted");
+		log.info("Group with Id " + groupId + " is deleted");
 		groupDao.deleteById(groupId);
 	}
 }

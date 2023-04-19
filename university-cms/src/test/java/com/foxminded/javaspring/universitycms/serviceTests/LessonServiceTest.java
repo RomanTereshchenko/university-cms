@@ -1,75 +1,86 @@
 package com.foxminded.javaspring.universitycms.serviceTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.foxminded.javaspring.universitycms.dao.CourseDao;
-import com.foxminded.javaspring.universitycms.dao.GroupDao;
 import com.foxminded.javaspring.universitycms.dao.LessonDao;
-import com.foxminded.javaspring.universitycms.dao.TeacherDao;
-import com.foxminded.javaspring.universitycms.model.Course;
-import com.foxminded.javaspring.universitycms.model.Group;
 import com.foxminded.javaspring.universitycms.model.Lesson;
-import com.foxminded.javaspring.universitycms.model.Teacher;
 import com.foxminded.javaspring.universitycms.service.LessonService;
 
-@SpringBootTest
-public class LessonServiceTest {
-
+@ExtendWith(MockitoExtension.class)
+class LessonServiceTest {
+	
+	@Mock
 	private LessonDao lessonDao;
-	private CourseDao courseDao;
-	private TeacherDao teacherDao;
-	private GroupDao groupDao;
+	
+	@InjectMocks
 	private LessonService lessonService;
-
-	@Autowired
-	public LessonServiceTest(LessonDao lessonDao, CourseDao courseDao, TeacherDao teacherDao, GroupDao groupDao,
-			LessonService lessonService) {
-		this.lessonDao = lessonDao;
-		this.courseDao = courseDao;
-		this.teacherDao = teacherDao;
-		this.groupDao = groupDao;
-		this.lessonService = lessonService;
-	}
-
+	
 	@Test
-	@Transactional
-	@WithMockUser(username = "test", roles = { "ADMIN" })
+	void testSaveNewLesson() throws SQLException {
+		Lesson lesson = new Lesson();
+		lesson.setLessonDate(LocalDate.of(2000, 1, 1));
+		Mockito.when(lessonDao.save(any(Lesson.class))).thenReturn(lesson);
+		Lesson savedLesson = lessonService.saveNewLesson(lesson);
+		assertEquals(LocalDate.of(2000, 1, 1), savedLesson.getLessonDate());
+	}
+	
+	@Test
+	void testFindLessonById() throws SQLException {
+		Lesson savedLesson = new Lesson();
+		savedLesson.setLessonID(1L);
+		Mockito.when(lessonDao.findById(savedLesson .getLessonID())).thenReturn(Optional.of(savedLesson ));
+		Lesson foundLesson = lessonService.findLessonById(savedLesson.getLessonID());
+		assertEquals(1L, foundLesson.getLessonID());
+		Lesson notFoundLesson = lessonService.findLessonById(0L);
+		assertEquals(null, notFoundLesson);
+	}
+	
+	@Test
+	void testFindAllLessons() throws SQLException {
+		List<Lesson> allLessonsList = new ArrayList<>();
+		Lesson lesson = new Lesson();
+		lesson.setLessonDate(LocalDate.of(2000, 1, 1));
+		allLessonsList.add(lesson);
+		Mockito.when(lessonDao.findAll()).thenReturn(allLessonsList);
+		List<Lesson> foundLessons = lessonService.findAllLessons();
+		assertEquals(LocalDate.of(2000, 1, 1), foundLessons.get(0).getLessonDate());
+	}
+	
+	@Test
 	void testUpdateLesson() throws SQLException {
-		Lesson testLesson = new Lesson();
-		testLesson.setLessonDate(LocalDate.of(2015, 1, 20));
-		testLesson.setLessonTime(LocalTime.of(8, 0));
-		Course course = new Course();
-		course.setCourseName("testCourse");
-		courseDao.save(course);
-		testLesson.setCourse(course);
-		Teacher teacher = new Teacher();
-		teacherDao.save(teacher);
-		testLesson.setTeacher(teacher);
-		Group group = new Group();
-		group.setGroupName("tt-00");
-		groupDao.save(group);
-		testLesson.setGroup(group);
-		lessonDao.save(testLesson);
-		testLesson.setLessonDate(LocalDate.of(2015, 2, 20));
-		lessonService.updateLesson(testLesson);
-		List<Lesson> lessons = lessonDao.findAll();
-		Lesson savedLesson = lessons.get(0);
-		assertEquals(LocalDate.of(2015, 2, 20), savedLesson.getLessonDate());
-		Lesson testLesson2 = new Lesson(testLesson.getLessonID() + 1, LocalDate.of(2015, 1, 20), LocalTime.of(8, 0),
-				new Course(), new Teacher(), new Group());
-		assertEquals(null, lessonService.updateLesson(testLesson2));
+		Lesson dBLesson = new Lesson();
+		dBLesson.setLessonID(1L);
+		Lesson updatingLesson = new Lesson();
+		updatingLesson.setLessonID(dBLesson.getLessonID());
+		updatingLesson.setLessonDate(LocalDate.of(2000, 1, 1));
+		Lesson nonUpdatingLesson = new Lesson();
+		nonUpdatingLesson.setLessonID(0L);
+		Mockito.when(lessonDao.findById(dBLesson.getLessonID())).thenReturn(Optional.of(dBLesson));
+		Lesson updatedLesson = lessonService.updateLesson(updatingLesson);
+		assertEquals(LocalDate.of(2000, 1, 1), updatedLesson.getLessonDate());
+		Lesson nonUpdatedLesson = lessonService.updateLesson(nonUpdatingLesson);
+		assertEquals(null, nonUpdatedLesson);
+	}
+	
+	@Test
+	void testDeleteLesson() throws SQLException {
+		lessonService.deleteLessonById(anyLong());
+		Mockito.verify(lessonDao).deleteById(anyLong());
 	}
 
 }

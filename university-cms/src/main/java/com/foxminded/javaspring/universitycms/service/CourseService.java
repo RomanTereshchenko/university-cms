@@ -67,5 +67,4 @@ public class CourseService {
 		log.info("Course with ID " + courseId + " is deleted");
 		courseDao.deleteById(courseId);
 	}
-
 }
