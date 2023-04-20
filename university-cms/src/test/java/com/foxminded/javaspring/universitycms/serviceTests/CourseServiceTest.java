@@ -1,52 +1,85 @@
 package com.foxminded.javaspring.universitycms.serviceTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.foxminded.javaspring.universitycms.dao.CourseDao;
 import com.foxminded.javaspring.universitycms.model.Course;
 import com.foxminded.javaspring.universitycms.service.CourseService;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
-
+	
+	@Mock
 	private CourseDao courseDao;
+	
+	@InjectMocks
 	private CourseService courseService;
-
-	@Autowired
-	public CourseServiceTest(CourseDao courseDao, CourseService courseService) {
-		this.courseDao = courseDao;
-		this.courseService = courseService;
-	}
-
+	
 	@Test
-	@Transactional
-	@WithMockUser(username = "test", roles = { "ADMIN" })
+	void testSaveNewCourse() throws SQLException {
+		Course course = new Course();
+		course.setCourseName("TestCourse");
+		Mockito.when(courseDao.save(any(Course.class))).thenReturn(course);
+		Course savedCourse = courseService.saveNewCourse(course);
+		assertEquals("TestCourse", savedCourse.getCourseName());
+	}
+	
+	@Test
+	void testFindCourseById() throws SQLException {
+		Course savedCourse = new Course();
+		savedCourse.setCourseID(1L);
+		Mockito.when(courseDao.findById(savedCourse .getCourseID())).thenReturn(Optional.of(savedCourse ));
+		Course foundCourse = courseService.findCourseById(savedCourse.getCourseID());
+		assertEquals(1L, foundCourse.getCourseID());
+		Course notFoundCourse = courseService.findCourseById(0L);
+		assertEquals(null, notFoundCourse);
+	}
+	
+	@Test
+	void testFindAllCourses() throws SQLException {
+		List<Course> allCoursesList = new ArrayList<>();
+		Course course = new Course();
+		course.setCourseName("TestCourse");
+		allCoursesList.add(course);
+		Mockito.when(courseDao.findAll()).thenReturn(allCoursesList);
+		List<Course> foundCourses = courseService.findAllCourses();
+		assertEquals("TestCourse", foundCourses.get(0).getCourseName());
+	}
+	
+	@Test
 	void testUpdateCourse() throws SQLException {
-		Course testCourse = new Course();
-		testCourse.setCourseName("TestCourse");
-		testCourse.setCourseDescription("Description");
-		testCourse.setGroups(new HashSet<>());
-		testCourse.setTeachers(new HashSet<>());
-		courseDao.save(testCourse);
-		testCourse.setCourseName("UpdatedTestCourse");
-		courseService.updateCourse(testCourse);
-		List<Course> courses = courseDao.findAll();
-		Course savedCourse = courses.get(0);
-		assertEquals("UpdatedTestCourse", savedCourse.getCourseName());
-		Course testCourse2 = new Course(testCourse.getCourseID() + 1, "TestCourse2", "Description2", new HashSet<>(),
-				new HashSet<>(), new HashSet<>());
-		assertEquals(null, courseService.updateCourse(testCourse2));
+		Course dBCourse = new Course();
+		dBCourse.setCourseID(1L);
+		Course updatingCourse = new Course();
+		updatingCourse.setCourseID(dBCourse.getCourseID());
+		updatingCourse.setCourseName("UpdatingCourse");
+		Course nonUpdatingCourse = new Course();
+		nonUpdatingCourse.setCourseID(0L);
+		Mockito.when(courseDao.findById(dBCourse.getCourseID())).thenReturn(Optional.of(dBCourse));
+		Course updatedCourse = courseService.updateCourse(updatingCourse);
+		assertEquals("UpdatingCourse", updatedCourse.getCourseName());
+		Course nonUpdatedCourse = courseService.updateCourse(nonUpdatingCourse);
+		assertEquals(null, nonUpdatedCourse);
+	}
+	
+	@Test
+	void testDeleteCourse() throws SQLException {
+		courseService.deleteCourseById(anyLong());
+		Mockito.verify(courseDao).deleteById(anyLong());
 	}
 
 }

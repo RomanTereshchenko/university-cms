@@ -65,7 +65,7 @@ public class PersonService {
 		var updatingPerson = personDao.findById(person.getPersonID());
 		if (updatingPerson.isPresent()) {
 			personDao.save(person);
-			log.info("Person" + person.getFirstName() + " " + person.getLastName() + " updated");
+			log.info("Person " + person.getFirstName() + " " + person.getLastName() + " updated");
 			return person;
 		}
 		log.info("This person does not exists in the database");

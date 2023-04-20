@@ -16,10 +16,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.foxminded.javaspring.universitycms.controller.PersonController;
+import com.foxminded.javaspring.universitycms.security.MethodSecurityConfig;
+import com.foxminded.javaspring.universitycms.security.SecSecurityConfig;
+import com.foxminded.javaspring.universitycms.service.CourseService;
+import com.foxminded.javaspring.universitycms.service.GroupService;
 import com.foxminded.javaspring.universitycms.service.PersonService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(PersonController.class)
+@WebMvcTest({PersonController.class, MethodSecurityConfig.class, SecSecurityConfig.class})
 class PersonControllerTest {
 
 	@Autowired
@@ -27,6 +31,12 @@ class PersonControllerTest {
 
 	@MockBean
 	private PersonService personService;
+	
+	@MockBean
+	private CourseService courseService;
+	
+	@MockBean
+	private GroupService groupService;
 
 	@Test
 	@WithMockUser(username = "test", roles = { "ADMIN" })

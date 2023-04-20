@@ -84,7 +84,7 @@ public class CourseController {
 	}
 
 	@PostMapping("/updateCourse")
-	public String updateCourse(@RequestParam Map<String, String> courseParams, Model model) throws SQLException {
+	public String updateCourse(@RequestParam Map<String, String> courseParams, Model model) throws SQLException {		
 		Course course = courseService.findCourseById(Long.parseLong(courseParams.get("courseId")));
 		Course updatedCourse = new Course();
 		updatedCourse.setCourseID(course.getCourseID());
