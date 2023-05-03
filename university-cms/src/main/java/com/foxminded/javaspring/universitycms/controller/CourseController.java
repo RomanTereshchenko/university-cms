@@ -171,7 +171,7 @@ public class CourseController {
 	}
 	
 	@PostMapping("/unassignTeacherToCourse")
-	public String coursesnAssignTeacherToCourse(@RequestParam Long courseId, @RequestParam Long unassignedTeacherId, Model model)
+	public String coursesUnassignTeacherToCourse(@RequestParam Long courseId, @RequestParam Long unassignedTeacherId, Model model)
 			throws SQLException {
 		Set<Teacher> courseTeachers = courseService.findCourseById(courseId).getTeachers();
 		Teacher unassignedTeacher = teacherService.findTeacherById(unassignedTeacherId);

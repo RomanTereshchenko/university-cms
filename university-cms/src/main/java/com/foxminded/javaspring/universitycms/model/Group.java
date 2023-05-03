@@ -37,17 +37,17 @@ public class Group {
 	@ManyToMany
 	@JoinTable(name = "groups_courses", schema = "university", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses;
-	
-	@OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	private Set<Student> students;
-	
-	@OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	private Set<Lesson> lessons;
 
 	public Group(Set<Course> courses) {
 		this.courses = courses;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -74,11 +74,22 @@ public class Group {
 	}
 
 	public String getCoursesNames() {
+		if (this.courses == null) {return "-";}
 		StringBuilder groupCoursesNames = new StringBuilder();
 		for (Course course : courses) {
 			groupCoursesNames.append(course.getCourseName()).append(", ");
 		}
 		return groupCoursesNames.toString();
+	}
+
+	public String getStudentsNames() {
+		if (this.students == null) {return "-";}
+		StringBuilder groupStudentsNames = new StringBuilder();
+		for (Student student : students) {
+			groupStudentsNames.append(student.getPerson().getFirstName()).append(" ")
+					.append(student.getPerson().getLastName()).append(", ");
+		}
+		return groupStudentsNames.toString();
 	}
 
 }
