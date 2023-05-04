@@ -52,6 +52,7 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 		personGenerator.generateNPersonsForTeacher(NUMBER_OF_TEACHERS);
 		personGenerator.generatePersonForAdmin();
 		studentGenerator.generateStudents();
+		studentGenerator.assignGroupsToStudents();
 		teacherGenerator.generateTeachers();
 		lessonGenerator.generateNLessons(NUMBER_OF_LESSONS);
 	}

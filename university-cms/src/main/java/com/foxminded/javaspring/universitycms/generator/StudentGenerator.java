@@ -50,4 +50,19 @@ public class StudentGenerator {
 		log.info("Students generated");
 	}
 
+	public void assignGroupsToStudents() {
+		List<Student> students = studentDao.findAll();
+		List<Group> groups = groupDao.findAll();
+		int assigningStudentIndex = 0;
+		while (assigningStudentIndex < students.size()) {
+			for (Group group : groups) {
+				Student student = students.get(assigningStudentIndex);
+				student.setGroup(group);
+				studentDao.save(student);
+				assigningStudentIndex++;
+			}
+		}
+		log.info("Groups set to students");
+	}
+
 }

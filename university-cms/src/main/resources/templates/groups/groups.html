@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groups</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<h1>Groups menu</h1>
+	<a href="/index" class="btn btn-secondary my-2">Home page</a> <br>
+	<nav>
+	<a class="btn btn-sm btn-outline-secondary" href="/groups/all">Show all groups</a>
+	<a th:if="${userPerson.getRole().toString()=='ADMIN'} OR ${userPerson.getRole().toString()=='TEACHER'}"
+	class="btn btn-sm btn-outline-secondary" href="/groups/create">Create new group</a>
+	<a th:if="${userPerson.getRole().toString()=='ADMIN'} OR ${userPerson.getRole().toString()=='TEACHER'}"
+	class="btn btn-sm btn-outline-secondary" href="/groups/update">Edit group</a>
+	<a th:if="${userPerson.getRole().toString()=='ADMIN'}"
+	class="btn btn-sm btn-outline-secondary" href="/groups/assignCourse">Assign/unassign course</a>
+	<a th:if="${userPerson.getRole().toString()=='ADMIN'}"
+	class="btn btn-sm btn-outline-secondary" href="/groups/assignStudent">Assign/unassign student</a>
+	<a th:if="${userPerson.getRole().toString()=='ADMIN'}"
+	class="btn btn-sm btn-outline-secondary" href="/groups/delete">Delete group</a>
+	</nav>
+</body>
+</html>

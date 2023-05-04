@@ -11,13 +11,14 @@ xmlns:th="http://www.thymeleaf.org">
 </head>
 <body>
 	<h1>University groups</h1>
-	<a href="http://localhost:8081/index" class="btn btn-secondary my-2">Home page</a>
+	<a href="/groups" class="btn btn-secondary my-2">Back to Groups menu</a>
 	<table>
 		<thead>
 			<tr>
 				<th>Group ID</th>
 				<th>Group name</th>
 				<th>Group courses</th>
+				<th>Group students</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,6 +29,7 @@ xmlns:th="http://www.thymeleaf.org">
 				<td><span th:text="${group.groupID}"> Group ID </span></td>
 				<td><span th:text="${group.groupName}"> Group name </span></td>
 				<td><span th:text="${group.getCoursesNames()}"> Group courses </span></td>
+				<td><span th:text="${group.getStudentsNames()}"> Group teachers </span></td>
 			</tr>
 		</tbody>
 	</table>
