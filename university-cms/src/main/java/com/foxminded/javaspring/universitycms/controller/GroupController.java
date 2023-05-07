@@ -1,13 +1,12 @@
 package com.foxminded.javaspring.universitycms.controller;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +42,8 @@ public class GroupController {
 	}
 
 	@GetMapping
-	public String groups(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUserName = authentication.getName();
+	public String groups(Model model, Principal principal) {
+		String currentUserName = principal.getName();
 		Person userPerson = personService.findPersonByLogin(currentUserName);
 		model.addAttribute("userPerson", userPerson);
 		return "groups/groups";
@@ -55,34 +53,34 @@ public class GroupController {
 	public String showAll(Model model) {
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsAll";
+		return "groups/all";
 	}
 
 	@GetMapping("/create")
 	public String groupsCreate(Model model) {
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsCreate";
+		return "groups/create";
 	}
 
-	@PostMapping("/createGroup")
+	@PostMapping("/create-group")
 	public String createNewGroup(@RequestParam Map<String, String> groupParams, Model model) throws SQLException {
 		Group group = new Group();
 		group.setGroupName(groupParams.get("name"));
 		groupService.saveNewGroup(group);
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsCreate";
+		return "groups/create";
 	}
 
 	@GetMapping("/update")
 	public String groupsUpdate(Model model) {
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsUpdate";
+		return "groups/update";
 	}
 
-	@PostMapping("/updateGroup")
+	@PostMapping("/update-group")
 	public String updateGroup(@RequestParam Map<String, String> groupParams, Model model) throws SQLException {		
 		Group group = groupService.findGroupById(Long.parseLong(groupParams.get("groupId")));
 		Group updatedGroup = new Group();
@@ -94,34 +92,34 @@ public class GroupController {
 		groupService.updateGroup(updatedGroup);
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsUpdate";
+		return "groups/update";
 	}
 
 	@GetMapping("/delete")
 	public String groupsDelete(Model model) {
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsDelete";
+		return "groups/delete";
 	}
 
-	@PostMapping("/deleteGroup")
+	@PostMapping("/delete-group")
 	public String deleteGroup(@RequestParam Long groupId, Model model) throws SQLException {
 		groupService.deleteGroupById(groupId);
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("groups", groups);
-		return "groups/groupsDelete";
+		return "groups/delete";
 	}
 
-	@GetMapping("/assignCourse")
+	@GetMapping("/assign-course")
 	public String groupsAssignCourse(Model model) {
 		List<Group> groups = groupService.findAllGroups();
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("groups", groups);
 		model.addAttribute("courses", courses);
-		return "groups/groupsAssignCourse";
+		return "groups/assign-course";
 	}
 
-	@PostMapping("/assignCourseToGroup")
+	@PostMapping("/assign-course-to-group")
 	public String groupsAssignCourseToGroup(@RequestParam Long groupId, @RequestParam Long assignedCourseId, Model model)
 			throws SQLException {
 		Set<Course> groupCourses = groupService.findGroupById(groupId).getCourses();
@@ -131,10 +129,10 @@ public class GroupController {
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("groups", groups);
 		model.addAttribute("courses", courses);
-		return "groups/groupsAssignCourse";
+		return "groups/assign-course";
 	}
 	
-	@PostMapping("/unassignCourseToGroup")
+	@PostMapping("/unassign-course-from-group")
 	public String groupsUnassignCourseToGroup(@RequestParam Long groupId, @RequestParam Long unassignedCourseId, Model model)
 			throws SQLException {
 		Set<Course> groupCourses = groupService.findGroupById(groupId).getCourses();
@@ -144,19 +142,19 @@ public class GroupController {
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("groups", groups);
 		model.addAttribute("courses", courses);
-		return "groups/groupsAssignCourse";
+		return "groups/assign-course";
 	}
 	
-	@GetMapping("/assignStudent")
+	@GetMapping("/assign-student")
 	public String groupsAssignStudent(Model model) {
 		List<Group> groups = groupService.findAllGroups();
 		List<Student> students = studentService.findAllStudents();
 		model.addAttribute("groups", groups);
 		model.addAttribute("students", students);
-		return "groups/groupsAssignStudent";
+		return "groups/assign-student";
 	}
 	
-	@PostMapping("/assignStudentToGroup")
+	@PostMapping("/assign-student-to-group")
 	public String groupsAssignStudentToGroup(@RequestParam Long groupId, @RequestParam Long assignedStudentId, Model model)
 			throws SQLException {
 		Set<Student> groupStudents = groupService.findGroupById(groupId).getStudents();
@@ -166,10 +164,10 @@ public class GroupController {
 		List<Student> students = studentService.findAllStudents();
 		model.addAttribute("groups", groups);
 		model.addAttribute("students", students);
-		return "groups/groupsAssignStudent";
+		return "groups/assign-student";
 	}
 	
-	@PostMapping("/unassignStudentToGroup")
+	@PostMapping("/unassign-student-from-group")
 	public String groupsUnasssignStudentToGroup(@RequestParam Long groupId, @RequestParam Long unassignedStudentId, Model model)
 			throws SQLException {
 		Set<Student> groupStudents = groupService.findGroupById(groupId).getStudents();
@@ -179,7 +177,7 @@ public class GroupController {
 		List<Student> students = studentService.findAllStudents();
 		model.addAttribute("groups", groups);
 		model.addAttribute("students", students);
-		return "groups/groupsAssignStudent";
+		return "groups/assign-student";
 	}
 
 }

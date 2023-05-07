@@ -4,15 +4,15 @@ xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Delete course</title>
+<title>Update course</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 </head>
 <body>
-	<form name='f' action="/courses/deleteCourse" method='POST'>
+	<form name='f' action="/courses/update-course" method='POST'>
 			<nav>
-			<h3>Delete Course</h3>
+			<h3>Update Course</h3>
 			<a href="/courses" class="btn btn-secondary my-2">Back to Courses menu</a>
 			</nav>
 			<table>
@@ -20,8 +20,17 @@ xmlns:th="http://www.thymeleaf.org">
 					<td>Course ID:</td>
 					<td><input type='number' name='courseId' value=''></td>
 				</tr>
+				<tr></tr>
 				<tr>
-					<td><input name="submit" type="submit" value="delete" /></td>
+					<td>New Course name:</td>
+					<td><input type='text' name='name' value=''></td>
+				</tr>
+				<tr>
+					<td>New Course description:</td>
+					<td><input type='text' name='description' value='' /></td>
+				</tr>
+				<tr>
+					<td><input name="submit" type="submit" value="update" /></td>
 				</tr>
 			</table>
 		</form>

@@ -1,8 +1,8 @@
 package com.foxminded.javaspring.universitycms.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +23,8 @@ public class IndexController {
 	}
 	
 	@GetMapping
-	public String showIndex (Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUserName = authentication.getName();
+	public String showIndex (Model model, Principal principal) {
+		String currentUserName = principal.getName();
 		Person userPerson = personService.findPersonByLogin(currentUserName);
 		model.addAttribute("userPerson", userPerson); 
 		return "index";

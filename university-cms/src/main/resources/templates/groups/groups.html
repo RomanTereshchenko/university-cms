@@ -19,9 +19,9 @@ xmlns:th="http://www.thymeleaf.org">
 	<a th:if="${userPerson.getRole().toString()=='ADMIN'} OR ${userPerson.getRole().toString()=='TEACHER'}"
 	class="btn btn-sm btn-outline-secondary" href="/groups/update">Edit group</a>
 	<a th:if="${userPerson.getRole().toString()=='ADMIN'}"
-	class="btn btn-sm btn-outline-secondary" href="/groups/assignCourse">Assign/unassign course</a>
+	class="btn btn-sm btn-outline-secondary" href="/groups/assign-course">Assign/unassign course</a>
 	<a th:if="${userPerson.getRole().toString()=='ADMIN'}"
-	class="btn btn-sm btn-outline-secondary" href="/groups/assignStudent">Assign/unassign student</a>
+	class="btn btn-sm btn-outline-secondary" href="/groups/assign-student">Assign/unassign student</a>
 	<a th:if="${userPerson.getRole().toString()=='ADMIN'}"
 	class="btn btn-sm btn-outline-secondary" href="/groups/delete">Delete group</a>
 	</nav>

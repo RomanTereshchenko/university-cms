@@ -79,7 +79,7 @@ class CourseControllerTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAll"))
+		.name("courses/all"))
 		.andExpect(status()
 		.isOk());
 	}
@@ -91,7 +91,7 @@ class CourseControllerTest {
 		.perform(get("/courses/create")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
-		.andExpect(view().name("courses/coursesCreate"))
+		.andExpect(view().name("courses/create"))
 		.andExpect(status().isOk());
 	}
 	
@@ -101,10 +101,10 @@ class CourseControllerTest {
 		Map<String,Object> courseParams = new HashMap<>();
 		courseParams.put("name", "testName");
 		courseParams.put("description", "testDescription");
-		mockMvc.perform(post("/courses/createCourse")
+		mockMvc.perform(post("/courses/create-course")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
-		.andExpect(view().name("courses/coursesCreate"))
+		.andExpect(view().name("courses/create"))
 		.andExpect(status().isOk());
 	}
 	
@@ -116,7 +116,7 @@ class CourseControllerTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesUpdate"))
+		.name("courses/update"))
 		.andExpect(status().isOk());
 	}
 	
@@ -132,11 +132,11 @@ class CourseControllerTest {
 		courseService.saveNewCourse(course);
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		mockMvc
-		.perform(post("/courses/updateCourse")
+		.perform(post("/courses/update-course")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("courseId", "0"))
 		.andDo(print())
-		.andExpect(view().name("courses/coursesUpdate"))
+		.andExpect(view().name("courses/update"))
 		.andExpect(status().isOk());
 	}
 	
@@ -149,7 +149,7 @@ class CourseControllerTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesDelete"))
+		.name("courses/delete"))
 		.andExpect(status().isOk());
 	}
 	
@@ -164,11 +164,11 @@ class CourseControllerTest {
 		course.setTeachers(new HashSet<Teacher>());
 		courseService.saveNewCourse(course);
 		mockMvc
-		.perform(post("/courses/deleteCourse")
+		.perform(post("/courses/delete-course")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("courseId", "0"))
 		.andDo(print())
-		.andExpect(view().name("courses/coursesDelete"))
+		.andExpect(view().name("courses/delete"))
 		.andExpect(status().isOk());
 	}
 	
@@ -176,11 +176,11 @@ class CourseControllerTest {
 	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenCoursesAssignGroup_thenStatus200() throws Exception {
 		mockMvc
-		.perform(get("/courses/assignGroup")
+		.perform(get("/courses/assign-group")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAssignGroup"))
+		.name("courses/assign-group"))
 		.andExpect(status().isOk());
 	}
 	
@@ -197,13 +197,13 @@ class CourseControllerTest {
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		mockMvc
-		.perform(post("/courses/assignGroupToCourse")
+		.perform(post("/courses/assign-group-to-course")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("courseId", "0")
 		.param("assignedGroupId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAssignGroup"))
+		.name("courses/assign-group"))
 		.andExpect(status().isOk());
 	}
 
@@ -220,13 +220,13 @@ class CourseControllerTest {
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		mockMvc
-		.perform(post("/courses/unassignGroupToCourse")
+		.perform(post("/courses/unassign-group-from-course")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("courseId", "0")
 		.param("unassignedGroupId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAssignGroup"))
+		.name("courses/assign-group"))
 		.andExpect(status().isOk());
 	}
 
@@ -234,11 +234,11 @@ class CourseControllerTest {
 	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenCoursesAssignTeacher_thenStatus200() throws Exception {
 		mockMvc
-		.perform(get("/courses/assignTeacher")
+		.perform(get("/courses/assign-teacher")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAssignTeacher"))
+		.name("courses/assign-teacher"))
 		.andExpect(status().isOk());
 	}
 	
@@ -256,13 +256,13 @@ class CourseControllerTest {
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		Mockito.when(teacherService.findTeacherById(anyLong())).thenReturn(teacher);
 		mockMvc
-		.perform(post("/courses/assignTeacherToCourse")
+		.perform(post("/courses/assign-teacher-to-course")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("courseId", "0")
 		.param("assignedTeacherId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAssignTeacher"))
+		.name("courses/assign-teacher"))
 		.andExpect(status().isOk());
 	}
 	
@@ -279,13 +279,13 @@ class CourseControllerTest {
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		Mockito.when(teacherService.findTeacherById(anyLong())).thenReturn(teacher);
 		mockMvc
-		.perform(post("/courses/unassignTeacherToCourse")
+		.perform(post("/courses/unassign-teacher-from-course")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("courseId", "0")
 		.param("unassignedTeacherId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("courses/coursesAssignTeacher"))
+		.name("courses/assign-teacher"))
 		.andExpect(status().isOk());
 	}
 	

@@ -30,10 +30,10 @@ public class AdminPanelController {
 
 	@GetMapping
 	public String showAll() {
-		return "adminPanel";
+		return "admin-panel";
 	}
 
-	@PostMapping("/createPerson")
+	@PostMapping("/create-person")
 	public String createNewPerson(@RequestParam Map<String, String> personParams) throws SQLException {
 		Person person = new Person();
 		person.setLogin(personParams.get("login"));
@@ -43,6 +43,6 @@ public class AdminPanelController {
 		person.setRole(Role.valueOf(personParams.get("role")));
 		personService.saveNewPerson(person);
 		log.info("New person created. " + person.toString());
-		return "adminPanel";
+		return "admin-panel";
 	}
 }
