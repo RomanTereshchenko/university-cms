@@ -1,13 +1,12 @@
 package com.foxminded.javaspring.universitycms.controller;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +42,8 @@ public class CourseController {
 	}
 
 	@GetMapping
-	public String courses(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUserName = authentication.getName();
+	public String courses(Model model, Principal principal) {
+		String currentUserName = principal.getName();
 		Person userPerson = personService.findPersonByLogin(currentUserName);
 		model.addAttribute("userPerson", userPerson);
 		return "courses/courses";
@@ -55,17 +53,17 @@ public class CourseController {
 	public String showAll(Model model) {
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesAll";
+		return "courses/all";
 	}
 
 	@GetMapping("/create")
 	public String coursesCreate(Model model) {
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesCreate";
+		return "courses/create";
 	}
 
-	@PostMapping("/createCourse")
+	@PostMapping("/create-course")
 	public String createNewCourse(@RequestParam Map<String, String> courseParams, Model model) throws SQLException {
 		Course course = new Course();
 		course.setCourseName(courseParams.get("name"));
@@ -73,17 +71,17 @@ public class CourseController {
 		courseService.saveNewCourse(course);
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesCreate";
+		return "courses/create";
 	}
 
 	@GetMapping("/update")
 	public String coursesUpdate(Model model) {
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesUpdate";
+		return "courses/update";
 	}
 
-	@PostMapping("/updateCourse")
+	@PostMapping("/update-course")
 	public String updateCourse(@RequestParam Map<String, String> courseParams, Model model) throws SQLException {		
 		Course course = courseService.findCourseById(Long.parseLong(courseParams.get("courseId")));
 		Course updatedCourse = new Course();
@@ -95,34 +93,34 @@ public class CourseController {
 		courseService.updateCourse(updatedCourse);
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesUpdate";
+		return "courses/update";
 	}
 
 	@GetMapping("/delete")
 	public String coursesDelete(Model model) {
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesDelete";
+		return "courses/delete";
 	}
 
-	@PostMapping("/deleteCourse")
+	@PostMapping("/delete-course")
 	public String deleteCourse(@RequestParam Long courseId, Model model) throws SQLException {
 		courseService.deleteCourseById(courseId);
 		List<Course> courses = courseService.findAllCourses();
 		model.addAttribute("courses", courses);
-		return "courses/coursesDelete";
+		return "courses/delete";
 	}
 
-	@GetMapping("/assignGroup")
+	@GetMapping("/assign-group")
 	public String coursesAssignGroup(Model model) {
 		List<Course> courses = courseService.findAllCourses();
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("courses", courses);
 		model.addAttribute("groups", groups);
-		return "courses/coursesAssignGroup";
+		return "courses/assign-group";
 	}
 
-	@PostMapping("/assignGroupToCourse")
+	@PostMapping("/assign-group-to-course")
 	public String coursesAssignGroupToCourse(@RequestParam Long courseId, @RequestParam Long assignedGroupId, Model model)
 			throws SQLException {
 		Set<Group> courseGroups = courseService.findCourseById(courseId).getGroups();
@@ -132,10 +130,10 @@ public class CourseController {
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("courses", courses);
 		model.addAttribute("groups", groups);
-		return "courses/coursesAssignGroup";
+		return "courses/assign-group";
 	}
 	
-	@PostMapping("/unassignGroupToCourse")
+	@PostMapping("/unassign-group-from-course")
 	public String coursesUnassignGroupToCourse(@RequestParam Long courseId, @RequestParam Long unassignedGroupId, Model model)
 			throws SQLException {
 		Set<Group> courseGroups = courseService.findCourseById(courseId).getGroups();
@@ -145,19 +143,19 @@ public class CourseController {
 		List<Group> groups = groupService.findAllGroups();
 		model.addAttribute("courses", courses);
 		model.addAttribute("groups", groups);
-		return "courses/coursesAssignGroup";
+		return "courses/assign-group";
 	}
 	
-	@GetMapping("/assignTeacher")
+	@GetMapping("/assign-teacher")
 	public String coursesAssignTeacher(Model model) {
 		List<Course> courses = courseService.findAllCourses();
 		List<Teacher> teachers = teacherService.findAllTeachers();
 		model.addAttribute("courses", courses);
 		model.addAttribute("teachers", teachers);
-		return "courses/coursesAssignTeacher";
+		return "courses/assign-teacher";
 	}
 	
-	@PostMapping("/assignTeacherToCourse")
+	@PostMapping("/assign-teacher-to-course")
 	public String coursesAssignTeacherToCourse(@RequestParam Long courseId, @RequestParam Long assignedTeacherId, Model model)
 			throws SQLException {
 		Set<Teacher> courseTeachers = courseService.findCourseById(courseId).getTeachers();
@@ -167,10 +165,10 @@ public class CourseController {
 		List<Teacher> teachers = teacherService.findAllTeachers();
 		model.addAttribute("courses", courses);
 		model.addAttribute("teachers", teachers);
-		return "courses/coursesAssignTeacher";
+		return "courses/assign-teacher";
 	}
 	
-	@PostMapping("/unassignTeacherToCourse")
+	@PostMapping("/unassign-teacher-from-course")
 	public String coursesUnassignTeacherToCourse(@RequestParam Long courseId, @RequestParam Long unassignedTeacherId, Model model)
 			throws SQLException {
 		Set<Teacher> courseTeachers = courseService.findCourseById(courseId).getTeachers();
@@ -180,7 +178,7 @@ public class CourseController {
 		List<Teacher> teachers = teacherService.findAllTeachers();
 		model.addAttribute("courses", courses);
 		model.addAttribute("teachers", teachers);
-		return "courses/coursesAssignTeacher";
+		return "courses/assign-teacher";
 	}
 
 }

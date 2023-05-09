@@ -4,33 +4,26 @@ xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Update course</title>
+<title>Create new course</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 </head>
 <body>
-	<form name='f' action="/courses/updateCourse" method='POST'>
-			<nav>
-			<h3>Update Course</h3>
+	<form name='f' action="/courses/create-course" method='POST'>
+			<h3>Create new Course</h3>
 			<a href="/courses" class="btn btn-secondary my-2">Back to Courses menu</a>
-			</nav>
 			<table>
 				<tr>
-					<td>Course ID:</td>
-					<td><input type='number' name='courseId' value=''></td>
-				</tr>
-				<tr></tr>
-				<tr>
-					<td>New Course name:</td>
+					<td>Course name:</td>
 					<td><input type='text' name='name' value=''></td>
 				</tr>
 				<tr>
-					<td>New Course description:</td>
+					<td>Course description:</td>
 					<td><input type='text' name='description' value='' /></td>
 				</tr>
 				<tr>
-					<td><input name="submit" type="submit" value="update" /></td>
+					<td><input name="submit" type="submit" value="create" /></td>
 				</tr>
 			</table>
 		</form>

@@ -4,22 +4,29 @@ xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Create new group</title>
+<title>Update group</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 </head>
 <body>
-	<form name='CreateGroup' action="/groups/createGroup" method='POST'>
-			<h3>Create new Group</h3>
+	<form name='UpdateGroup' action="/groups/update-group" method='POST'>
+			<nav>
+			<h3>Update Group</h3>
 			<a href="/groups" class="btn btn-secondary my-2">Back to Groups menu</a>
+			</nav>
 			<table>
 				<tr>
-					<td>Group name:</td>
+					<td>Group ID:</td>
+					<td><input type='number' name='groupId' value=''></td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td>New Group name:</td>
 					<td><input type='text' name='name' value=''></td>
 				</tr>
 				<tr>
-					<td><input name="submit" type="submit" value="create" /></td>
+					<td><input name="submit" type="submit" value="update" /></td>
 				</tr>
 			</table>
 		</form>

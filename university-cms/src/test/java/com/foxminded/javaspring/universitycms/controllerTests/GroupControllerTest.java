@@ -80,7 +80,7 @@ class GroupControllerTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAll"))
+		.name("groups/all"))
 		.andExpect(status()
 		.isOk());
 	}
@@ -92,7 +92,7 @@ class GroupControllerTest {
 		.perform(get("/groups/create")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
-		.andExpect(view().name("groups/groupsCreate"))
+		.andExpect(view().name("groups/create"))
 		.andExpect(status().isOk());
 	}
 	
@@ -101,10 +101,10 @@ class GroupControllerTest {
 	void whenGroupsCreateGroup_thenStatus200() throws Exception {		
 		Map<String,Object> groupParams = new HashMap<>();
 		groupParams.put("name", "testName");
-		mockMvc.perform(post("/groups/createGroup")
+		mockMvc.perform(post("/groups/create-group")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
-		.andExpect(view().name("groups/groupsCreate"))
+		.andExpect(view().name("groups/create"))
 		.andExpect(status().isOk());
 	}
 	
@@ -116,7 +116,7 @@ class GroupControllerTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsUpdate"))
+		.name("groups/update"))
 		.andExpect(status().isOk());
 	}
 	
@@ -132,11 +132,11 @@ class GroupControllerTest {
 		groupService.saveNewGroup(group);
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		mockMvc
-		.perform(post("/groups/updateGroup")
+		.perform(post("/groups/update-group")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("groupId", "0"))
 		.andDo(print())
-		.andExpect(view().name("groups/groupsUpdate"))
+		.andExpect(view().name("groups/update"))
 		.andExpect(status().isOk());
 	}
 	
@@ -149,7 +149,7 @@ class GroupControllerTest {
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsDelete"))
+		.name("groups/delete"))
 		.andExpect(status().isOk());
 	}
 	
@@ -164,11 +164,11 @@ class GroupControllerTest {
 		group.setLessons(new HashSet<Lesson>());
 		groupService.saveNewGroup(group);
 		mockMvc
-		.perform(post("/groups/deleteGroup")
+		.perform(post("/groups/delete-group")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("groupId", "0"))
 		.andDo(print())
-		.andExpect(view().name("groups/groupsDelete"))
+		.andExpect(view().name("groups/delete"))
 		.andExpect(status().isOk());
 	}
 	
@@ -176,11 +176,11 @@ class GroupControllerTest {
 	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenGroupsAssignCourse_thenStatus200() throws Exception {
 		mockMvc
-		.perform(get("/groups/assignCourse")
+		.perform(get("/groups/assign-course")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAssignCourse"))
+		.name("groups/assign-course"))
 		.andExpect(status().isOk());
 	}
 	
@@ -197,13 +197,13 @@ class GroupControllerTest {
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		mockMvc
-		.perform(post("/groups/assignCourseToGroup")
+		.perform(post("/groups/assign-course-to-group")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("groupId", "0")
 		.param("assignedCourseId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAssignCourse"))
+		.name("groups/assign-course"))
 		.andExpect(status().isOk());
 	}
 
@@ -220,13 +220,13 @@ class GroupControllerTest {
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		Mockito.when(courseService.findCourseById(anyLong())).thenReturn(course);
 		mockMvc
-		.perform(post("/groups/unassignCourseToGroup")
+		.perform(post("/groups/unassign-course-from-group")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("groupId", "0")
 		.param("unassignedCourseId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAssignCourse"))
+		.name("groups/assign-course"))
 		.andExpect(status().isOk());
 	}
 
@@ -234,11 +234,11 @@ class GroupControllerTest {
 	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenGroupsAssignStudent_thenStatus200() throws Exception {
 		mockMvc
-		.perform(get("/groups/assignStudent")
+		.perform(get("/groups/assign-student")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAssignStudent"))
+		.name("groups/assign-student"))
 		.andExpect(status().isOk());
 	}
 	
@@ -256,13 +256,13 @@ class GroupControllerTest {
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		Mockito.when(studentService.findStudentById(anyLong())).thenReturn(student);
 		mockMvc
-		.perform(post("/groups/assignStudentToGroup")
+		.perform(post("/groups/assign-student-to-group")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("groupId", "0")
 		.param("assignedStudentId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAssignStudent"))
+		.name("groups/assign-student"))
 		.andExpect(status().isOk());
 	}
 	
@@ -279,13 +279,13 @@ class GroupControllerTest {
 		Mockito.when(groupService.findGroupById(anyLong())).thenReturn(group);
 		Mockito.when(studentService.findStudentById(anyLong())).thenReturn(student);
 		mockMvc
-		.perform(post("/groups/unassignStudentToGroup")
+		.perform(post("/groups/unassign-student-from-group")
 		.contentType(MediaType.APPLICATION_JSON)
 		.param("groupId", "0")
 		.param("unassignedStudentId", "0"))
 		.andDo(print())
 		.andExpect(view()
-		.name("groups/groupsAssignStudent"))
+		.name("groups/assign-student"))
 		.andExpect(status().isOk());
 	}
 

@@ -40,5 +40,10 @@ public class Person {
 	@Column(name = "role")
 	@MapKeyEnumerated(value = EnumType.STRING)
 	protected Role role;
+	
+	@Override
+	public String toString() {
+		return this.firstName + " " + this.lastName;
+	}
 
 }
