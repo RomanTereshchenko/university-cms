@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete course</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<form name='deleteStudent' action="/students/delete-student" method='POST'>
+			<nav>
+			<h3>Delete Student</h3>
+			<a href="/students" class="btn btn-secondary my-2">Back to Students menu</a>
+			</nav>
+			<table>
+				<tr>
+					<td>Student ID:</td>
+					<td><input type='number' name='studentId' value=''></td>
+				</tr>
+				<tr>
+					<td><input name="submit" type="submit" value="delete" /></td>
+				</tr>
+			</table>
+		</form>
+		<br>
+		<h3>The current University students are:</h3><br>
+		<table>
+		<thead>
+			<tr>
+				<th>Student ID</th>
+				<th>Student first name</th>
+				<th>Student last name</th>
+				<th>Student group</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${students.empty}">
+				<td colspan="2">No Students Available</td>
+			</tr>
+			<tr th:each="student : ${students}">
+				<td><span th:text="${student.studentID}"> Student ID </span></td>
+				<td><span th:text="${student.getPerson().getFirstName()}"> Student first name </span></td>
+				<td><span th:text="${student.getPerson().getLastName()}"> Student last name </span></td>
+				<td th:if="${student.getGroup() == null}"><span> N/A </span></td>
+				<td th:if="${student.getGroup() != null}"><span th:text="${student.getGroup().getGroupName()}"> Student group </span></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
