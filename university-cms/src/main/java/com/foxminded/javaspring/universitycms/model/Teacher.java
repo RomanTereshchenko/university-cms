@@ -42,7 +42,7 @@ public class Teacher {
 	private Set<Course> courses;
 	
 	@OneToMany (mappedBy = "teacher", cascade = CascadeType.ALL)
-	private Set<Lesson> teachers;
+	private Set<Lesson> lessons;
 
 	public Teacher(Person person, Set<Course> courses) {
 		this.person = person;
@@ -75,6 +75,7 @@ public class Teacher {
 	}
 
 	public String getCoursesNames() {
+		if (this.courses == null) {return "N/A";}
 		StringBuilder teacherCoursesNames = new StringBuilder();
 		for (Course course : courses) {
 			teacherCoursesNames.append(course.getCourseName()).append(", ");

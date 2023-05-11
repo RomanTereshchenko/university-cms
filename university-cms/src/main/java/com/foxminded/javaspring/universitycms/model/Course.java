@@ -60,7 +60,7 @@ public class Course {
 	}
 
 	public String getGroupsNames() {
-		if (this.groups == null) {return "-";}
+		if (this.groups == null) {return "N/A";}
 		StringBuilder courseGroupsNames = new StringBuilder();
 		for (Group group : groups) {
 			courseGroupsNames.append(group.getGroupName()).append(", ");
@@ -69,7 +69,7 @@ public class Course {
 	}
 
 	public String getTeachersNames() {
-		if (this.groups == null) {return "-";}
+		if (this.groups == null) {return "N/A";}
 		StringBuilder courseTeachersNames = new StringBuilder();
 		for (Teacher teacher : teachers) {
 			courseTeachersNames.append(teacher.getPerson().getFirstName()).append(" ")
