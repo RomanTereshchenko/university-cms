@@ -77,4 +77,9 @@ public class Course {
 		}
 		return courseTeachersNames.toString();
 	}
+	
+	@Override
+	public String toString () {
+		return this.getCourseName();
+	}
 }

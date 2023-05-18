@@ -37,16 +37,7 @@ public class ScheduleGenerator {
 		log.info("Initial schedule generated");
 	}
 
-	private void setLessonsDatesTimes(LocalDate startDate, LocalDate endDate) {
-		List<Lesson> lessons = lessonDao.findAll();
-		for (Lesson lesson : lessons) {
-				lesson.setLessonDate(generateRandomDate(startDate, endDate));
-				lesson.setLessonTime(generateRandomTime());
-				lessonDao.save(lesson);
-			}
-	}
-
-	private void applySessionsNumber(int lessonSessionsNumber) {
+	public void applySessionsNumber(int lessonSessionsNumber) {
 		List<Lesson> lessons = lessonDao.findAll();
 		for (int i = 0; i < lessonSessionsNumber - 1; i++) {
 			for (Lesson lesson : lessons) {
@@ -58,6 +49,15 @@ public class ScheduleGenerator {
 				additionalLesson.setGroup(lesson.getGroup());
 				lessonDao.save(additionalLesson);
 			}
+		}
+	}
+
+	public void setLessonsDatesTimes(LocalDate startDate, LocalDate endDate) {
+		List<Lesson> lessons = lessonDao.findAll();
+		for (Lesson lesson : lessons) {
+			lesson.setLessonDate(generateRandomDate(startDate, endDate));
+			lesson.setLessonTime(generateRandomTime());
+			lessonDao.save(lesson);
 		}
 	}
 
