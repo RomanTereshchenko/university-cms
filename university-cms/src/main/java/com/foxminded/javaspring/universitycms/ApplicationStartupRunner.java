@@ -1,5 +1,7 @@
 package com.foxminded.javaspring.universitycms;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,6 +12,7 @@ import com.foxminded.javaspring.universitycms.generator.DBCleaner;
 import com.foxminded.javaspring.universitycms.generator.GroupGenerator;
 import com.foxminded.javaspring.universitycms.generator.LessonGenerator;
 import com.foxminded.javaspring.universitycms.generator.PersonGenerator;
+import com.foxminded.javaspring.universitycms.generator.ScheduleGenerator;
 import com.foxminded.javaspring.universitycms.generator.StudentGenerator;
 import com.foxminded.javaspring.universitycms.generator.TeacherGenerator;
 
@@ -24,16 +27,20 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 	private StudentGenerator studentGenerator;
 	private TeacherGenerator teacherGenerator;
 	private LessonGenerator lessonGenerator;
+	private ScheduleGenerator scheduleGenerator;
 
 	private static final int NUMBER_OF_GROUPS = 5;
 	private static final int NUMBER_OF_STUDENTS = 20;
 	private static final int NUMBER_OF_TEACHERS = 5;
 	private static final int NUMBER_OF_LESSONS = 5;
-
+	private static final LocalDate SCHEDULE_START_DATE = LocalDate.of(2023, 5, 1);
+	private static final LocalDate SCHEDULE_END_DATE = LocalDate.of(2023, 5, 5);
+	private static final int LESSON_SESSIONS_NUMBER = 2;
+	
 	@Autowired
 	public ApplicationStartupRunner(DBCleaner dbCleaner, CourseGenerator courseGenerator, GroupGenerator groupGenerator,
 			PersonGenerator personGenerator, StudentGenerator studentGenerator, TeacherGenerator teacherGenerator,
-			LessonGenerator lessonGenerator) {
+			LessonGenerator lessonGenerator, ScheduleGenerator scheduleGenerator) {
 		this.dbCleaner = dbCleaner;
 		this.courseGenerator = courseGenerator;
 		this.groupGenerator = groupGenerator;
@@ -41,6 +48,7 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 		this.studentGenerator = studentGenerator;
 		this.teacherGenerator = teacherGenerator;
 		this.lessonGenerator = lessonGenerator;
+		this.scheduleGenerator = scheduleGenerator;
 	}
 
 	@Override
@@ -55,6 +63,7 @@ public class ApplicationStartupRunner implements CommandLineRunner {
 		studentGenerator.assignGroupsToStudents();
 		teacherGenerator.generateTeachers();
 		lessonGenerator.generateNLessons(NUMBER_OF_LESSONS);
+		scheduleGenerator.generateSchedule(SCHEDULE_START_DATE, SCHEDULE_END_DATE, LESSON_SESSIONS_NUMBER);
 	}
 
 }

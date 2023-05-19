@@ -1,8 +1,5 @@
 package com.foxminded.javaspring.universitycms.generator;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -34,9 +31,6 @@ public class LessonGenerator {
 	private TeacherDao teacherDao;
 	private GroupDao groupDao;
 
-	private LocalDate lessonDate = LocalDate.of(2023, Month.MARCH, 04);
-	private LocalTime lessonTime = LocalTime.of(9, 00);
-
 	@Autowired
 	public LessonGenerator(Random random, CourseDao courseDao, TeacherDao teacherDao, GroupDao groupDao,
 			LessonDao lessonDao) {
@@ -57,8 +51,6 @@ public class LessonGenerator {
 		List<Teacher> teachers = teacherDao.findAll();
 		List<Group> groups = groupDao.findAll();
 		Lesson lesson = new Lesson();
-		lesson.setLessonDate(lessonDate);
-		lesson.setLessonTime(lessonTime);
 		lesson.setCourse(courses.get(random.nextInt(courses.size() - 1)));
 		lesson.setTeacher(teachers.get(random.nextInt(teachers.size() - 1)));
 		lesson.setGroup(groups.get(random.nextInt(groups.size() - 1)));

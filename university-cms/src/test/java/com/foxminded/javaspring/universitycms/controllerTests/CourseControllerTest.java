@@ -8,9 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,9 +96,6 @@ class CourseControllerTest {
 	@Test
 	@WithMockUser(username = "test", roles = { "ADMIN" })
 	void whenCoursesCreateCourse_thenStatus200() throws Exception {		
-		Map<String,Object> courseParams = new HashMap<>();
-		courseParams.put("name", "testName");
-		courseParams.put("description", "testDescription");
 		mockMvc.perform(post("/courses/create-course")
 		.contentType(MediaType.APPLICATION_JSON))
 		.andDo(print())
