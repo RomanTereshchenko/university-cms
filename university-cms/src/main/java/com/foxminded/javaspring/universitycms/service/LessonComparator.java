@@ -15,15 +15,4 @@ public class LessonComparator implements Comparator<Lesson> {
 		c = c.thenComparing(Lesson::getLessonTime);
 		return c.compare(l1, l2);
 	}
-	
-//	@Override
-//	public int compare(Lesson l1, Lesson l2) {
-//		int result = ((Long)(l1.getLessonDate().toEpochDay())).compareTo(l2.getLessonDate().toEpochDay());
-//		if (result != 0) return result;
-//		return l1.getLessonTime().toSecondOfDay() - l2.getLessonTime().toSecondOfDay();
-//	}
-	
-//	public int compare(Lesson l1, Lesson l2) {
-//		return l1.getTeacher().getPerson().getLastName().compareTo(l2.getTeacher().getPerson().getLastName());
-//	}
 }
